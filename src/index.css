@@ -8,11 +8,6 @@ body {
 @tailwind components;
 @tailwind utilities;
 
-.input {
-  max-width: 100%;
-  min-width: 280px;
-}
-
 .ListOfCatagories {
   display: flex;
   flex-wrap: wrap;
