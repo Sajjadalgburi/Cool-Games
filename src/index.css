@@ -7,3 +7,25 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.input {
+  max-width: 100%;
+  min-width: 280px;
+}
+
+.ListOfCatagories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 1rem;
+
+  .Category li {
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      color: #ffff;
+    }
+  }
+}
