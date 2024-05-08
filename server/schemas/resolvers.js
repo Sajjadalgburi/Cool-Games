@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -11,8 +12,8 @@ const resolvers = {
           return await User.findById(context.user._id);
         }
 
-        // If user is not authenticated, throw a custom error
-        throw new Error('Authentication required! Please log in.');
+        // If user is not authenticated, throw an AuthenticationError
+        throw AuthenticationError;
       } catch (err) {
         // Log any errors that occur during the process
         console.error(err);
