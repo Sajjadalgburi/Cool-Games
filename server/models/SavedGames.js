@@ -23,10 +23,12 @@ const savedGamesSchema = new Schema({
     required: false,
     trim: true,
   },
-  // URL to the game image field (string), required
+  link: {
+    type: String,
+  },
+  // URL to the game image field (string)
   image: {
     type: String,
-    required: true,
   },
   // Game rating field (number), required
   rating: {
