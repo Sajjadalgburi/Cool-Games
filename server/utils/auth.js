@@ -1,8 +1,11 @@
+// This file will contain the authentication middleware function and the signToken function that we'll use to sign our tokens.
+require('dotenv').config();
+
 const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 
-const secret = 'mysecretssshhhhhhh';
-const expiration = '2h';
+const secret = process.env.SESS_SECRET;
+const expiration = process.env.SESS_LIFETIME;
 
 module.exports = {
   AuthenticationError: new GraphQLError('Could not authenticate user.', {
