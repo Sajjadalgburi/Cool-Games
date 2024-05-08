@@ -1,5 +1,6 @@
 // Import mongoose library
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 // Destructure Schema and Model from mongoose
 const { Schema, model: Model } = mongoose;
@@ -33,6 +34,11 @@ const UserSchema = new Schema({
   // Define savedGames field as an array of SavedGames (subdocument referencing)
   savedGames: [SavedGames],
 });
+
+// custom method to compare and validate password for logging in
+userSchema.methods.isCorrectPassword = async function (password) {
+  return bcrypt.compare(password, this.password);
+};
 
 // Create a User model using the UserSchema
 const User = Model('User', UserSchema);
