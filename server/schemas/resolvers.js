@@ -63,6 +63,24 @@ const resolvers = {
         console.error(err);
       }
     },
+
+    // Resolver function for saving a game to a user's profile
+    saveGame: async (parent, { gameData }, context) => {
+      try {
+        if (context.user) {
+          // Update the user's savedGames array with the new gameData
+          return (updatedUser = await User.findByIdAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { savedGames: gameData } },
+            { new: true, runValidators: true },
+          ));
+        }
+
+        throw new AuthenticationError('You need to be logged in!');
+      } catch (err) {
+        console.error(err);
+      }
+    },
   },
 };
 
