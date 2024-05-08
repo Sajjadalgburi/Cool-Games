@@ -19,6 +19,9 @@ const Navigation = () => {
           <li>
             <Link to="explore">Explore</Link>
           </li>
+          <li>
+            <Link to="donate">Donate</Link>
+          </li>
         </ul>
       </div>
       <div className="navbar-end ">
