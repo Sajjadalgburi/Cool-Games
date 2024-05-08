@@ -28,8 +28,11 @@ const resolvers = {
         // Create a new user with the provided username, email, and password
         const user = await User.create({ username, email, password });
 
+        // Create a new token for the newly created user
+        const token = signToken(user);
+
         // Return the newly created user
-        return user;
+        return { user, token };
       } catch (err) {
         // Log any errors that occur during the process
         console.error(err);
