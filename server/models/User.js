@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // Destructure Schema and Model from mongoose
-const { Schema, model: Model } = mongoose;
+const { Schema, Model } = mongoose;
 
 // Import SavedGames model (assuming it's defined in 'SavedGames.js')
 const SavedGames = require('./SavedGames');
