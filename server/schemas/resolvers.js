@@ -76,7 +76,29 @@ const resolvers = {
           ));
         }
 
-        throw new AuthenticationError('You need to be logged in!');
+        throw new AuthenticationError(
+          'You need to be logged in to save a game!',
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    },
+
+    // Resolver function for removing a game from a user's profile
+    removeGame: async (parent, { gameId }, context) => {
+      try {
+        if (context.user) {
+          // Update the user's savedGames array by removing the game with the provided gameId
+          return (updatedUser = await User.findByIdAndUpdate(
+            { _id: context.user._id },
+            { $pull: { savedGames: { gameId } } },
+            { new: true },
+          ));
+        }
+
+        throw new AuthenticationError(
+          'You need to be logged in to remove a game!',
+        );
       } catch (err) {
         console.error(err);
       }
