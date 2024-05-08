@@ -38,6 +38,31 @@ const resolvers = {
         console.error(err);
       }
     },
+
+    // Resolver function for logging in a user
+    login: async (parent, { email, password }) => {
+      try {
+        // Find a user with the provided email
+        const user = await User.findOne({ email });
+
+        if (!user) {
+          throw new AuthenticationError('Incorrect credentials');
+        }
+
+        // Check if the provided password matches the stored password
+        const checkPassword = await user.isCorrectPassword(password);
+
+        if (!checkPassword) {
+          throw new AuthenticationError('Incorrect credentials');
+        }
+
+        const token = signToken(user);
+
+        return { token, user };
+      } catch (err) {
+        console.error(err);
+      }
+    },
   },
 };
 
