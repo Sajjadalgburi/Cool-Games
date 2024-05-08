@@ -38,6 +38,14 @@ const typeDefs = gql`
     link: String
     image: String
   }
+
+  ## Specifying the type of data that can be queried from the server
+  type Mutation {
+    createUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    saveGame(GameInput: GameInput!): User
+    removeGame(gameId: ID!): User
+  }
 `;
 
 // Exporting the defined typeDefs for use in other modules
