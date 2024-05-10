@@ -1,8 +1,5 @@
-// Import mongoose library
-const mongoose = require('mongoose');
-
 // Destructure Schema and Model from mongoose
-const { Schema, model: Model } = mongoose;
+const { Schema } = require('mongoose');
 
 // Define the schema for saved games
 const savedGamesSchema = new Schema({
@@ -37,8 +34,5 @@ const savedGamesSchema = new Schema({
   },
 });
 
-// Create the SavedGames model using the savedGamesSchema
-const SavedGames = Model('SavedGames', savedGamesSchema);
-
-// Export the SavedGames model for use in other files
-module.exports = SavedGames;
+// Export the savedGamesSchema
+module.exports = savedGamesSchema;

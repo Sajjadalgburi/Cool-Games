@@ -1,39 +1,44 @@
-// Import mongoose library
-const mongoose = require('mongoose');
+// Destructure Schema and Model from mongoose
+const { Schema, model } = require('mongoose');
+
 const bcrypt = require('bcrypt');
 
-// Destructure Schema and Model from mongoose
-const { Schema, Model } = mongoose;
+// Import SavedGames model
+const savedGamesSchema = require('./SavedGames');
 
-// Import SavedGames model (assuming it's defined in 'SavedGames.js')
-const SavedGames = require('./SavedGames');
-
-// Define UserSchema using mongoose Schema
-const UserSchema = new Schema({
-  // Define username field with specific properties
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 1,
+// Define userSchema using mongoose Schema
+const userSchema = new Schema(
+  {
+    // Define username field with specific properties
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      minlength: 1,
+    },
+    // Define email field with specific properties (using regex for email format)
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      match: [/.+@.+\..+/, 'Must match an email address!'],
+    },
+    // Define password field with specific properties
+    password: {
+      type: String,
+      required: true,
+      minlength: 5,
+    },
+    // Define savedGames field as an array of SavedGames (subdocument referencing)
+    savedGames: [savedGamesSchema],
   },
-  // Define email field with specific properties (using regex for email format)
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: [/.+@.+\..+/, 'Must match an email address!'],
+  {
+    toJSON: {
+      virtuals: true,
+    },
   },
-  // Define password field with specific properties
-  password: {
-    type: String,
-    required: true,
-    minlength: 5,
-  },
-  // Define savedGames field as an array of SavedGames (subdocument referencing)
-  savedGames: [SavedGames],
-});
+);
 
 // custom method to compare and validate password for logging in
 userSchema.methods.isCorrectPassword = async function (password) {
@@ -50,8 +55,8 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Create a User model using the UserSchema
-const User = Model('User', UserSchema);
+// Create a User model using the userSchema
+const User = model('User', userSchema);
 
 // Export the User model for use in other files
 module.exports = User;
