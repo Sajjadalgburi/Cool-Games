@@ -19,7 +19,7 @@ const HomePage = () => {
           <div style={{ position: 'relative', width: '100%' }}>
             <input
               type="text"
-              placeholder="Type here"
+              placeholder="Search for games..."
               className="input input-bordered"
               style={{
                 width: '100%',
@@ -40,6 +40,8 @@ const HomePage = () => {
               />
             </svg>
           </div>
+
+          <h2 className="text-3xl font-bold my-5">Categories</h2>
 
           <div className="ListOfCatagories">
             <ul className="Category">
