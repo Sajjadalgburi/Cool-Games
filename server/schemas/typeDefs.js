@@ -14,10 +14,10 @@ const typeDefs = gql`
   type Game {
     _id: ID!
     title: String!
-    description: String!
+    description: String
     rating: String!
     genre: String
-    link: String
+    link: String!
     image: String
   }
 
