@@ -1,12 +1,14 @@
 import { gql } from '@apollo/client';
 
 export const POPULAR_GAMES_QUERY = gql`
-  query {
+  query PopularGames {
     popularGames {
-      _id
+      game_id
       title
       rating
+      releaseDate
       link
+      image
     }
   }
 `;
