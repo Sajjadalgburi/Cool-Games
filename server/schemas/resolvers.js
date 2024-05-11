@@ -1,5 +1,7 @@
 const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
+const axios = require('axios');
+require('dotenv').config();
 
 const resolvers = {
   Query: {
@@ -17,6 +19,31 @@ const resolvers = {
       } catch (err) {
         // Log any errors that occur during the process
         console.error(err);
+      }
+    },
+
+    // Resolver function for fetching popular games
+    popularGames: async () => {
+      const options = {
+        method: 'GET',
+        url: 'https://opencritic-api.p.rapidapi.com/game',
+        params: {
+          sort: 'score',
+          skip: '4',
+        },
+        headers: {
+          // Use the RapidAPI key to make requests to the OpenCritic API
+          'X-RapidAPI-Key': process.env.POPULAR_GAMES_API,
+          'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com',
+        },
+      };
+
+      try {
+        const response = await axios.request(options);
+        return response.data; // Return the popular games data
+      } catch (error) {
+        console.error('Error fetching popular games:', error);
+        throw new Error('Failed to fetch popular games');
       }
     },
   },
