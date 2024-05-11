@@ -10,6 +10,7 @@ const typeDefs = gql`
     savedGames: [Game]
   }
 
+  ## Defining a new type called Game to represent the data that will be fetched from the backend
   type Game {
     _id: ID!
     title: String!
@@ -22,6 +23,8 @@ const typeDefs = gql`
 
   type Query {
     me: User
+    ## Defining a new query to fetch popular games from the backend then display them on the front end
+    popularGames: [Game!] # New query to fetch popular games
   }
 
   type Auth {
