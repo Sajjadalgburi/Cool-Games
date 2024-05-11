@@ -2,6 +2,9 @@ const { User } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 const axios = require('axios');
 require('dotenv').config();
+const rapidApiKey = process.env.RAPID_API_KEY;
+
+console.log(rapidApiKey);
 
 const resolvers = {
   Query: {
@@ -31,16 +34,35 @@ const resolvers = {
           sort: 'score',
           skip: '4',
         },
+
         headers: {
           // Use the RapidAPI key to make requests to the OpenCritic API
-          'X-RapidAPI-Key': process.env.POPULAR_GAMES_API,
+          'X-RapidAPI-Key': 'd0d7011489msh487f57ad833a5edp11a6a7jsn7f9a9712f206',
           'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com',
         },
       };
 
       try {
         const response = await axios.request(options);
-        return response.data; // Return the popular games data
+
+        if (response.status !== 200) {
+          throw new Error(
+            `Failed to fetch popular games: ${response.statusText}`,
+          );
+        }
+
+        return response.data.map((game) => ({
+          game_id: game.id,
+          title: game.name,
+          rating: game.topCriticScore,
+          link: game.url,
+          releaseDate: game.firstReleaseDate,
+          // https://img.opencritic.com/ the actual link
+          // game/5434/XYHLvQr3.jpg
+          image: game.images.banner.og
+            ? `https://img.opencritic.com/${game.images.banner.og}`
+            : `https://via.placeholder.com/150`,
+        }));
       } catch (error) {
         console.error('Error fetching popular games:', error);
         throw new Error('Failed to fetch popular games');
