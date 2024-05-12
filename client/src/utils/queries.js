@@ -26,3 +26,17 @@ export const QUERY_SINGLE_USER = gql`
     }
   }
 `;
+
+// Define the query for fetching context user
+export const QUERY_ME = gql`
+  query me {
+    # Request fields for the currently authenticated user
+    me {
+      _id
+      username
+      savedGames {
+        game_id
+      }
+    }
+  }
+`;
