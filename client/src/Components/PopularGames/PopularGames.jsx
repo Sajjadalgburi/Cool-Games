@@ -8,7 +8,7 @@ const PopularGamesList = () => {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    if (data && data.popularGames) {
+    if (!loading && data.popularGames) {
       setGames(data.popularGames);
     }
   }, [data]);
