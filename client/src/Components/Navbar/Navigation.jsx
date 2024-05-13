@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
+import auth from '../../utils/auth';
 
 const Navigation = () => {
+  // set modal display state
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className="navbar bg-base-100 p-1 mt-2">
       <div className="navbar-start">
@@ -17,7 +21,19 @@ const Navigation = () => {
             <Link to="about-me">About me</Link>
           </li>
           <li>
-            <Link to="explore">Explore</Link>
+            {auth.loggedIn() ? (
+              <>
+                <Link to={'/'}>
+                  {' '}
+                  <p onClick={auth.logout}>logout</p>
+                </Link>
+              </>
+            ) : (
+              <>
+                {' '}
+                <p onClick={() => showModal(true)}>log In/Sign Up</p>
+              </>
+            )}
           </li>
           <li>
             <Link to="donate">Donate</Link>
