@@ -37,7 +37,8 @@ const resolvers = {
 
         headers: {
           // Use the RapidAPI key to make requests to the OpenCritic API
-          'X-RapidAPI-Key': 'd0d7011489msh487f57ad833a5edp11a6a7jsn7f9a9712f206',
+          'X-RapidAPI-Key':
+            '935bae58b7msh586cb15b8a4de89p15ecacjsn051b09981f0b',
           'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com',
         },
       };
