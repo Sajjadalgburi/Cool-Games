@@ -3,8 +3,9 @@
 
 // flow bite react components
 import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
-
 import { CREATE_USER } from '../../utils/mutations';
+import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
 
 const SignUpModal = ({ isOpen, formState, onChange, onClose }) => {
   const [createUser, { error }] = useMutation(CREATE_USER);
