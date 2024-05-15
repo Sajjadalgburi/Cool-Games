@@ -3,10 +3,34 @@
 
 // flow bite react components
 import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
-import { Link } from 'react-router-dom';
+import { LOGIN_USER } from '../../utils/mutations';
+import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
 
 const LogInModal = ({ isOpen, formState, onChange, onClose }) => {
   // set modal display state
+
+  const [login, { error }] = useMutation(LOGIN_USER);
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const loginUser = await login({
+        variables: {
+          email: formState.email,
+          password: formState.password,
+        },
+      });
+
+      const token = loginUser.data.login.token;
+
+      Auth.login(token);
+    } catch (err) {
+      console.error(err);
+      throw new Error('You encountered: ', error);
+    }
+  };
 
   return (
     <>
@@ -52,7 +76,7 @@ const LogInModal = ({ isOpen, formState, onChange, onClose }) => {
               </div>
             </div>
             <div className="w-full flex align-middle justify-center">
-              <Button>Log in to your account</Button>
+              <Button onClick={handleFormSubmit}>Log in to your account</Button>
             </div>
           </div>
         </Modal.Body>
