@@ -3,11 +3,33 @@
 
 // flow bite react components
 import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
-import { Link } from 'react-router-dom';
 
-const SignInModal = ({ isOpen, formState, onChange, onClose }) => {
+import { CREATE_USER } from '../../utils/mutations';
+
+const SignUpModal = ({ isOpen, formState, onChange, onClose }) => {
+  const [createUser, { error }] = useMutation(CREATE_USER);
+
+  // function to handle form submission to create user
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const creatingUser = await createUser({
+        variables: {
+          email: formState.email,
+          password: formState.password,
+          username: formState.username,
+        },
+      });
+
+      const token = creatingUser.data.createUser.token;
+
+      Auth.login(token);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // set modal display state
-
   return (
     <>
       {/*  Modal component for login/signup */}
@@ -65,7 +87,7 @@ const SignInModal = ({ isOpen, formState, onChange, onClose }) => {
               </div>
             </div>
             <div className="w-full flex align-middle justify-center">
-              <Button>Log in to your account</Button>
+              <Button onClick={handleFormSubmit}>Log in to your account</Button>
             </div>
           </div>
         </Modal.Body>
@@ -74,4 +96,4 @@ const SignInModal = ({ isOpen, formState, onChange, onClose }) => {
   );
 };
 
-export default SignInModal;
+export default SignUpModal;
