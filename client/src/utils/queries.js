@@ -2,13 +2,13 @@ import { gql } from '@apollo/client';
 
 // Define the query for fetching popular games
 export const POPULAR_GAMES_QUERY = gql`
-  query PopularGames {
+  query popularGames {
     popularGames {
       game_id
       title
       rating
-      releaseDate
       link
+      releaseDate
       image
     }
   }
