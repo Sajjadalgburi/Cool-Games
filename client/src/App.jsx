@@ -41,10 +41,10 @@ import Navigation from './Components/Navbar/Navigation';
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="flex-column justify-flex-start min-100-vh">
+      <>
         <Navigation />
         <Outlet />
-      </div>
+      </>
     </ApolloProvider>
   );
 }
