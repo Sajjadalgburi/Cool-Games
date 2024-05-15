@@ -3,6 +3,7 @@ import App from './App.jsx';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './Page/HomePage.jsx';
+import ProfilePage from './Page/Profile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: '/profile',
+        element: <ProfilePage />,
       },
     ],
   },
