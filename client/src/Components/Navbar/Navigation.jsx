@@ -1,4 +1,4 @@
-import SignInModal from '../SignInModal/Index';
+import SignUpModal from '../SignUpModal/Index';
 import LoginInModal from '../LoginModal/Index';
 
 import { useState } from 'react';
@@ -58,7 +58,7 @@ const Navigation = () => {
             ) : (
               <>
                 <li>
-                  <button onClick={() => handleOpenModal('signIn')}>
+                  <button onClick={() => handleOpenModal('signUp')}>
                     Sign In
                   </button>
                 </li>
@@ -67,9 +67,9 @@ const Navigation = () => {
                     Log In
                   </button>
                 </li>
-                {currentModal === 'signIn' && (
-                  <SignInModal
-                    isOpen={currentModal === 'signIn'}
+                {currentModal === 'signUp' && (
+                  <SignUpModal
+                    isOpen={currentModal === 'signUp'}
                     formState={formState}
                     onChange={handleChange}
                     onClose={handleCloseModal}
