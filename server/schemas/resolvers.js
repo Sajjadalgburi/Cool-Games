@@ -78,6 +78,11 @@ const resolvers = {
         // Create a new user with the provided username, email, and password
         const user = await User.create({ username, email, password });
 
+        // If the user creation fails, throw an error
+        if (!user) {
+          throw new Error('Failed to create user');
+        }
+
         // Create a new token for the newly created user
         const token = signToken(user);
 
