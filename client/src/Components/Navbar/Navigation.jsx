@@ -92,7 +92,11 @@ const Navigation = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <Link to="https://github.com/Sajjadalgburi">
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to="https://github.com/Sajjadalgburi"
+          >
             <button className="btn mx-4 btn-ghost btn-circle">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +115,11 @@ const Navigation = () => {
             </button>
           </Link>
 
-          <Link to="https://www.linkedin.com/in/sajjadalgburi/">
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            to="https://www.linkedin.com/in/sajjadalgburi/"
+          >
             <button className="btn mr-4 btn-ghost btn-circle">
               <img
                 width="50"
