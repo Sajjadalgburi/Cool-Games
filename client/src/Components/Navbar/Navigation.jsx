@@ -50,11 +50,17 @@ const Navigation = () => {
               <Link to="about-me">About me</Link>
             </li>
             {Auth.loggedIn() ? (
-              <li>
-                <Link to={'/'}>
-                  <p onClick={Auth.logout}>logout</p>
-                </Link>
-              </li>
+              <>
+                {' '}
+                <li>
+                  <Link to={'/'}>
+                    <p onClick={Auth.logout}>logout</p>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="profile">Profile</Link>
+                </li>
+              </>
             ) : (
               <>
                 <li>
