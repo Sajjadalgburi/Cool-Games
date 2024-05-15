@@ -3,7 +3,7 @@ import LoginInModal from '../LoginModal/Index';
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import auth from '../../utils/auth';
+import Auth from '../../utils/auth';
 
 const Navigation = () => {
   const [currentModal, setCurrentModal] = useState(false);
@@ -49,10 +49,10 @@ const Navigation = () => {
             <li>
               <Link to="about-me">About me</Link>
             </li>
-            {auth.loggedIn() ? (
+            {Auth.loggedIn() ? (
               <li>
                 <Link to={'/'}>
-                  <p onClick={auth.logout}>logout</p>
+                  <p onClick={Auth.logout}>logout</p>
                 </Link>
               </li>
             ) : (
