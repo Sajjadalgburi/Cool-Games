@@ -14,16 +14,17 @@ const SignUpModal = ({ isOpen, formState, onChange, onClose }) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      const creatingUser = await createUser({
+      const { data } = await createUser({
         variables: {
+          username: formState.username,
           email: formState.email,
           password: formState.password,
-          username: formState.username,
         },
       });
 
-      const token = creatingUser.data.createUser.token;
+      console.log(data);
 
+      const token = data.createUser.token;
       Auth.login(token);
     } catch (err) {
       console.error(err);
@@ -88,7 +89,7 @@ const SignUpModal = ({ isOpen, formState, onChange, onClose }) => {
               </div>
             </div>
             <div className="w-full flex align-middle justify-center">
-              <Button onClick={handleFormSubmit}>Log in to your account</Button>
+              <Button onClick={handleFormSubmit}>Sign Up!</Button>
             </div>
           </div>
         </Modal.Body>
