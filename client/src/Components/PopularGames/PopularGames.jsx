@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { POPULAR_GAMES_QUERY } from '../../utils/queries';
-import { Button } from 'flowbite-react';
 import Auth from '../../utils/auth';
 import { useAuth } from '../../../context/AuthContext';
 import SignUpModal from '../SignUpModal/Index';
@@ -28,6 +27,9 @@ const PopularGamesList = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error fetching popular games</p>;
 
+  const alretUser = () => {
+    alert('Please sign up or log in to save a game');
+  };
   return (
     <>
       <h2 className="text-4xl font-bold my-9 text-center">Popular Games</h2>
@@ -45,15 +47,22 @@ const PopularGamesList = () => {
             {Auth.loggedIn() ? (
               <Link
                 to={`/game/${game.game_id}`}
-                className="flex justify-center align-middle"
+                className="flex justify-between align-middle"
               >
-                <Button>View Game</Button>
+                <button className="btn btn-secondary">Save Game</button>
+                <button className="btn btn-primary">View Game</button>
               </Link>
             ) : (
-              <div className="flex justify-center align-middle">
-                <Button onClick={() => handleOpenModal('logIn')}>
+              <div className="flex justify-between align-middle">
+                <button className="btn btn-secondary" onClick={alretUser}>
+                  Save Game
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleOpenModal('logIn')}
+                >
                   View Game
-                </Button>
+                </button>
               </div>
             )}
           </div>
