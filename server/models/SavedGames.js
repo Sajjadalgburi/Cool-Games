@@ -9,17 +9,6 @@ const savedGamesSchema = new Schema({
     required: true,
     trim: true,
   },
-  // Game description field (string), required
-  description: {
-    type: String,
-    required: true,
-  },
-  // Game genre field (string), optional and trimmed
-  genre: {
-    type: String,
-    required: false,
-    trim: true,
-  },
   link: {
     type: String,
   },
