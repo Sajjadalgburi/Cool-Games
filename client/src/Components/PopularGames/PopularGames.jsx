@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { POPULAR_GAMES_QUERY } from '../../utils/queries';
+import { Button } from 'flowbite-react';
+import Auth from '../../utils/auth';
 
 const PopularGamesList = () => {
   const { loading, error, data } = useQuery(POPULAR_GAMES_QUERY);
@@ -31,22 +33,18 @@ const PopularGamesList = () => {
             <h3 className="text-lg font-semibold mb-1">{game.title}</h3>
             <p className="text-gray-600 mb-2">Rating: {game.rating}</p>
             <p className="text-gray-600 mb-2">Genre: {game.genre}</p>
-            <div className="flex justify-between">
-              <a
-                href={game.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
-              >
-                Game URL
-              </a>
+            {Auth.loggedIn() ? (
               <Link
                 to={`/game/${game.game_id}`}
-                className="text-blue-500 hover:underline"
+                className="flex justify-center align-middle"
               >
-                View Details
+                <Button>View Game</Button>
               </Link>
-            </div>
+            ) : (
+              <Link className="flex justify-center align-middle">
+                <Button>LOGIN</Button>
+              </Link>
+            )}
           </div>
         ))}
       </div>
