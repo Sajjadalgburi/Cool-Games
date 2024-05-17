@@ -12,7 +12,7 @@ const typeDefs = gql`
 
   ## Defining a new type called Game to represent the data that will be fetched from the backend
   type Game {
-    game_id: String
+    game_id: ID!
     title: String!
     rating: String!
     releaseDate: String
@@ -32,7 +32,7 @@ const typeDefs = gql`
   }
 
   input GameInput {
-    _id: ID!
+    game_id: ID!
     title: String!
     description: String!
     rating: String!
