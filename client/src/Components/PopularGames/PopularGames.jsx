@@ -1,15 +1,28 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import { POPULAR_GAMES_QUERY } from '../../utils/queries';
 import Auth from '../../utils/auth';
 import { useAuth } from '../../../context/AuthContext';
 import SignUpModal from '../SignUpModal/Index';
 import LoginInModal from '../LoginModal/Index';
 
+// apollo client
+import { useQuery, useMutation } from '@apollo/client';
+import { SAVE_GAME } from '../../utils/mutations';
+
+// imported the helper functions from localStorage.js
+import { saveGameIds, getSavedGameIds } from '../../utils/localStorage';
+
 const PopularGamesList = () => {
+  // use the useQuery hook to make a query request to the server
   const { loading, error, data } = useQuery(POPULAR_GAMES_QUERY);
+
+  // create a state for saving returned games data from the server
   const [games, setGames] = useState([]);
+
+  // create state to hold saved game_id values
+  const [savedGameIds, setSavedGameIds] = useState(getSavedGameIds());
+
   const {
     currentModal,
     formState,
@@ -22,6 +35,9 @@ const PopularGamesList = () => {
     if (!loading && data && data.popularGames) {
       setGames(data.popularGames);
     }
+
+    // if data exists or has changed from the response of the query, then run the setGames function to update the games state
+    return () => saveGameIds(savedGameIds);
   }, [data, loading]);
 
   if (loading) return <p>Loading...</p>;
