@@ -120,13 +120,13 @@ const resolvers = {
     },
 
     // Resolver function for saving a game to a user's profile
-    saveGame: async (parent, { gameData }, context) => {
+    saveGame: async (parent, { GameInput }, context) => {
       try {
         if (context.user) {
-          // Update the user's savedGames array with the new gameData
+          // Update the user's savedGames array with the new GameInput
           return (updatedUser = await User.findByIdAndUpdate(
             { _id: context.user._id },
-            { $addToSet: { savedGames: gameData } },
+            { $addToSet: { savedGames: GameInput } },
             { new: true, runValidators: true },
           ));
         }
