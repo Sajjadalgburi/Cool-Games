@@ -1,37 +1,20 @@
+import { Link } from 'react-router-dom';
+import Auth from '../../utils/auth';
 import SignUpModal from '../SignUpModal/Index';
 import LoginInModal from '../LoginModal/Index';
 
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Auth from '../../utils/auth';
+//  using custom made context hook for the modals
+import { useAuth } from '../../../context/AuthContext';
 
 const Navigation = () => {
-  const [currentModal, setCurrentModal] = useState(false);
-
-  const [formState, setFormState] = useState({
-    username: '',
-    email: '',
-    password: '',
-  });
-
-  const handleOpenModal = (modalType) => {
-    setFormState({ email: '', password: '', username: '' });
-    setCurrentModal(modalType);
-  };
-
-  function handleCloseModal() {
-    setCurrentModal(false);
-    setFormState({
-      username: '',
-      email: '',
-      password: '',
-    });
-  }
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormState((prev) => ({ ...prev, [name]: value }));
-  };
+  // using the useAuth hook to get the currentModal, formState, handleOpenModal, handleCloseModal, and handleChange
+  const {
+    currentModal,
+    formState,
+    handleOpenModal,
+    handleCloseModal,
+    handleChange,
+  } = useAuth();
 
   return (
     <>
