@@ -34,6 +34,8 @@ const PopularGamesList = () => {
     handleChange,
   } = useAuth();
 
+  const [saveGame] = useMutation(SAVE_GAME);
+
   useEffect(() => {
     if (!loading && data && data.popularGames) {
       setGames(data.popularGames);
@@ -51,14 +53,9 @@ const PopularGamesList = () => {
     alert('Please sign up or log in to save a game');
   };
 
-  const [saveGame] = useMutation(SAVE_GAME);
-
-  // function to handle saving a game
+  // handle saviing a game fucntion
   const handleSaveGame = async (gameId) => {
-    // find the game in `data` by the matching id
     const gameToSave = games.find((game) => game.game_id === gameId);
-
-    // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -66,17 +63,20 @@ const PopularGamesList = () => {
     }
 
     try {
+      // manually removing the __typename field from the game object
+      // ! this is necessary because the saveGame mutation does not accept the __typename field
+      const { __typename, ...gameData } = gameToSave;
+
+      // save the game according to the saveGame mutation from graphql
       const response = await saveGame({
-        variables: { gameData: { ...gameToSave } },
+        variables: { GameInput: { ...gameData } },
       });
 
-      // if game successfully saves to user's account, save game id to state
-
+      // if the saveGame mutation is successful, save the game_id to the savedGameIds state
       if (response.data && response.data.saveGame) {
-        setSavedGameIds([...savedGameIds, gameToSave.game_id]);
+        setSavedGameIds([...savedGameIds, gameData.game_id]);
       }
     } catch (err) {
-      // log any error
       console.error(err);
     }
   };
@@ -100,7 +100,6 @@ const PopularGamesList = () => {
                 <Link to={`/game/${game.game_id}`}>
                   <button className="btn btn-primary">View Game</button>
                 </Link>
-
                 <button
                   className="btn btn-secondary"
                   disabled={savedGameIds?.some(
