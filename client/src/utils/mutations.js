@@ -23,3 +23,19 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const SAVE_GAME = gql`
+  mutation saveGame($GameInput: GameInput!) {
+    saveGame(GameInput: $GameInput) {
+      _id
+      savedGames {
+        game_id
+        title
+        rating
+        releaseDate
+        link
+        image
+      }
+    }
+  }
+`;
