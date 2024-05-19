@@ -3,24 +3,33 @@ const { Schema } = require('mongoose');
 
 // Define the schema for saved games
 const savedGamesSchema = new Schema({
-  // Game title field (string), required and trimmed
+  // id filed for the game
+  game_id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   title: {
     type: String,
     required: true,
     trim: true,
   },
+  rating: {
+    type: String,
+    required: true,
+  },
+  releaseDate: {
+    type: String,
+  },
   link: {
     type: String,
+    required: true,
   },
   // URL to the game image field (string)
   image: {
     type: String,
   },
   // Game rating field (number), required
-  rating: {
-    type: Number,
-    required: true,
-  },
 });
 
 // Export the savedGamesSchema
