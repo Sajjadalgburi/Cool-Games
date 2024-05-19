@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <>
+    <div className=" mt-60">
       <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
         <nav className="grid grid-flow-col gap-4">
           <Link to={'/about-me'} className="link link-hover">
@@ -70,13 +70,33 @@ const Footer = () => {
                 />
               </button>
             </Link>
+
+            <Link
+              target="_blank"
+              rel="noopener noreferrer"
+              to="https://www.instagram.com/sajjadalgburi/"
+            >
+              <button className="btn  btn-ghost btn-circle">
+                <img
+                  width="50"
+                  height="50"
+                  src="https://img.icons8.com/ios-filled/50/A6ADBB/instagram-new--v1.png"
+                  alt="instagram"
+                  className="h-8 w-8"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </button>
+            </Link>
           </div>
         </nav>
         <aside>
           <p>Copyright © 2024 - All right reserved by Cool Games Ltd</p>
         </aside>
       </footer>
-    </>
+    </div>
   );
 };
 
