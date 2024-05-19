@@ -1,6 +1,11 @@
 const { User } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken } = require('../utils/auth');
 const axios = require('axios');
+const {
+  AuthenticationError,
+  UserInputError, // Ensure correct casing for UserInputError
+} = require('apollo-server-express');
+
 require('dotenv').config();
 const rapidApiKey = process.env.RAPID_API_KEY;
 
@@ -16,9 +21,7 @@ const resolvers = {
           // Fetch and return the user by their ID
           return await User.findById(context.user._id);
         }
-
-        // If user is not authenticated, throw an AuthenticationError
-        throw AuthenticationError;
+        throw new AuthenticationError('You need to be logged in');
       } catch (err) {
         // Log any errors that occur during the process
         console.error(err);
@@ -34,11 +37,10 @@ const resolvers = {
           sort: 'score',
           skip: '4',
         },
-
         headers: {
           // Use the RapidAPI key to make requests to the OpenCritic API
           'X-RapidAPI-Key':
-            '12f708c73fmsh4067d6bf68b271dp1df313jsne3e74c1f958f',
+            '12f708c73fmsh4067d6bf68b271dp1df313jsne3e74c1f958f', // Use the RapidAPI key from environment variable
           'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com',
         },
       };
@@ -58,8 +60,8 @@ const resolvers = {
           rating: game.topCriticScore,
           link: game.url,
           releaseDate: game.firstReleaseDate,
-          // https://img.opencritic.com/ the actual link
-          // game/5434/XYHLvQr3.jpg
+          // https://img.opencritic.com/ ! IMPORTANT ! this is the base URL for the images
+          // game/5434/XYHLvQr3.jpg ! IMPORTANT ! this is the image path given by each game object
           image: game.images.banner.og
             ? `https://img.opencritic.com/${game.images.banner.og}`
             : `https://via.placeholder.com/150`,
@@ -80,7 +82,7 @@ const resolvers = {
 
         // If the user creation fails, throw an error
         if (!user) {
-          throw new Error('Failed to create user');
+          throw new AuthenticationError('Failed to create user');
         }
 
         // Create a new token for the newly created user
@@ -112,7 +114,6 @@ const resolvers = {
         }
 
         const token = signToken(user);
-
         return { token, user };
       } catch (err) {
         console.error(err);
@@ -120,39 +121,51 @@ const resolvers = {
     },
 
     // Resolver function for saving a game to a user's profile
-    saveGame: async (parent, { GameInput }, context) => {
+    saveGame: async (parent, { gameInput }, context) => {
       try {
-        if (context.user) {
-          // Update the user's savedGames array with the new GameInput
-          return (updatedUser = await User.findByIdAndUpdate(
-            { _id: context.user._id },
-            { $addToSet: { savedGames: GameInput } },
-            { new: true, runValidators: true },
-          ));
+        if (!context.user) {
+          throw new AuthenticationError('You must be logged in to save a game');
         }
 
-        throw new AuthenticationError(
-          'You need to be logged in to save a game!',
+        // Validate gameInput
+        const { game_id, title, rating, link, releaseDate, image } = gameInput;
+        if (!game_id || !title || !rating || !link) {
+          throw new UserInputError(
+            'Game input must include game_id, title, rating, and link',
+          );
+        }
+
+        // Update the user's savedGames array with the new gameInput
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedGames: gameInput } },
+          { new: true, runValidators: true },
         );
+
+        if (!updatedUser) {
+          throw new Error('User not found');
+        }
+
+        return updatedUser;
       } catch (err) {
         console.error(err);
+        throw new Error('Error saving game');
       }
     },
 
     // Resolver function for removing a game from a user's profile
-    removeGame: async (parent, { gameId }, context) => {
+    removeGame: async (parent, { game_id }, context) => {
       try {
         if (context.user) {
-          // Update the user's savedGames array by removing the game with the provided gameId
-          return (updatedUser = await User.findByIdAndUpdate(
+          return await User.findOneAndUpdate(
             { _id: context.user._id },
-            { $pull: { savedGames: { gameId } } },
+            { $pull: { savedGames: { game_id } } },
             { new: true },
-          ));
+          );
         }
 
         throw new AuthenticationError(
-          'You need to be logged in to remove a game!',
+          'You need to be logged in to remove a game',
         );
       } catch (err) {
         console.error(err);
