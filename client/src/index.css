@@ -20,7 +20,7 @@ body {
     transition: all 0.3s;
 
     &:hover {
-      color: #ffff;
+      opacity: 0.6;
     }
   }
 }
@@ -39,4 +39,10 @@ body {
 
 .hidden-checkbox {
   display: none;
+}
+
+.dropdown ul li {
+  font-size: 2rem;
+  margin: 0.33rem 0;
+  font-weight: 800;
 }
