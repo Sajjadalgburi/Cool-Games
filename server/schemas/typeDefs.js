@@ -23,7 +23,7 @@ const typeDefs = gql`
   type Query {
     me: User
     ## Defining a new query to fetch popular games from the backend then display them on the front end
-    popularGames: [Game!] # New query to fetch popular games
+    popularGames: [Game]! # New query to fetch popular games
   }
 
   type Auth {
@@ -44,8 +44,8 @@ const typeDefs = gql`
   type Mutation {
     createUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    saveGame(GameInput: GameInput!): User
-    removeGame(gameId: ID!): User
+    saveGame(gameInput: GameInput!): User
+    removeGame(game_id: ID!): User
   }
 `;
 
