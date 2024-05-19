@@ -39,6 +39,7 @@ import { Outlet } from 'react-router-dom';
 
 // components
 import Navigation from './Components/Navbar/Navigation';
+import Footer from './Page/Footer';
 
 // app.jsx component
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <>
           <Navigation />
           <Outlet />
+          <Footer />
         </>
       </ApolloProvider>
     </AuthProvider>
