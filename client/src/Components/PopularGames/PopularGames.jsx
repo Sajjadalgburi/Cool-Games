@@ -43,7 +43,7 @@ const PopularGamesList = () => {
   }, [data, loading]);
 
   useEffect(() => {
-    return () => saveGameIds(savedGameIds);
+    saveGameIds(savedGameIds);
   }, [savedGameIds]);
 
   if (loading) return <p>Loading...</p>;
@@ -54,8 +54,8 @@ const PopularGamesList = () => {
   };
 
   // handle saviing a game fucntion
-  const handleSaveGame = async (gameId) => {
-    const gameToSave = games.find((game) => game.game_id === gameId);
+  const handleSaveGame = async (game_id) => {
+    const gameToSave = games.find((game) => game.game_id === game_id);
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -63,18 +63,28 @@ const PopularGamesList = () => {
     }
 
     try {
-      // manually removing the __typename field from the game object
-      // ! this is necessary because the saveGame mutation does not accept the __typename field
+      // Remove the previous game ID if it exists
+      const filteredSavedGameIds = savedGameIds.filter(
+        (savedGameId) => savedGameId !== game_id,
+      );
+
+      // Manually remove the __typename field from the game object
+      // This is necessary because the saveGame mutation does not accept the __typename field
       const { __typename, ...gameData } = gameToSave;
 
-      // save the game according to the saveGame mutation from graphql
+      // Ensure game_id is a string and not null
+      if (typeof gameData.game_id !== 'string' || !gameData.game_id) {
+        throw new Error('Invalid game_id');
+      }
+
+      // Save the game according to the saveGame mutation from GraphQL
       const response = await saveGame({
-        variables: { GameInput: { ...gameData } },
+        variables: { gameInput: { ...gameData } },
       });
 
-      // if the saveGame mutation is successful, save the game_id to the savedGameIds state
+      // If the saveGame mutation is successful, update the savedGameIds state
       if (response.data && response.data.saveGame) {
-        setSavedGameIds([...savedGameIds, gameData.game_id]);
+        setSavedGameIds([...filteredSavedGameIds, gameData.game_id]);
       }
     } catch (err) {
       console.error(err);
