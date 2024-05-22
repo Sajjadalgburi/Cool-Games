@@ -38,6 +38,29 @@ const ProfilePage = () => {
               }:`
             : 'You have no saved games!'}{' '}
         </h5>
+
+        <div className=" mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {data.me.savedGames.map((game) => (
+            <div key={game.game_id} className="border rounded shadow p-4">
+              <img
+                src={game.image}
+                alt={`Cover for ${game.title}`}
+                className="h-40 w-full object-cover mb-2"
+              />
+              <h3 className="text-lg font-semibold mb-1">{game.title}</h3>
+              <p className="text-gray-600 mb-2">Rating: {game.rating}</p>
+              <p className="text-gray-600 mb-2">
+                Release Date: {game.releaseDate}
+              </p>
+              <div className="flex justify-between align-middle">
+                <Link to={game.link} target="_blank" rel="noopener noreferrer">
+                  <button className="btn btn-primary">View Game</button>
+                </Link>
+                <button className="btn btn-error">DELETE</button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
