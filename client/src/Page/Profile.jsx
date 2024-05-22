@@ -45,14 +45,20 @@ const ProfilePage = () => {
               <img
                 src={game.image}
                 alt={`Cover for ${game.title}`}
-                className="h-40 w-full object-cover mb-2"
+                className="h-100 w-full object-cover mb-2"
               />
-              <h3 className="text-lg font-semibold mb-1">{game.title}</h3>
-              <p className="text-gray-600 mb-2">Rating: {game.rating}</p>
-              <p className="text-gray-600 mb-2">
-                Release Date: {game.releaseDate}
-              </p>
-              <div className="flex justify-between align-middle">
+
+              <div className="gameDescription">
+                <h3 className="text-2xl text-center font-semibold mb-1">
+                  {game.title}
+                </h3>
+                <p className="my-3 text-gray-600 mb-2">Rating: {game.rating}</p>
+                <p className="my-5 text-gray-600 mb-2">
+                  Release Date: {game.releaseDate}
+                </p>
+              </div>
+
+              <div className="mt-6 flex justify-between align-middle">
                 <Link to={game.link} target="_blank" rel="noopener noreferrer">
                   <button className="btn btn-primary">View Game</button>
                 </Link>
