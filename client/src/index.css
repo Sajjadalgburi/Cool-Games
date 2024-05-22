@@ -46,3 +46,11 @@ body {
   margin: 0.33rem 0;
   font-weight: 800;
 }
+
+.welcomeSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+}
