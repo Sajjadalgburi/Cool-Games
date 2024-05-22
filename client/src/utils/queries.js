@@ -22,6 +22,11 @@ export const QUERY_SINGLE_USER = gql`
       username
       savedGames {
         game_id
+        title
+        rating
+        releaseDate
+        link
+        image
       }
     }
   }
@@ -36,6 +41,11 @@ export const QUERY_ME = gql`
       username
       savedGames {
         game_id
+        title
+        rating
+        releaseDate
+        link
+        image
       }
     }
   }
