@@ -1,16 +1,43 @@
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
+import { removeGameId } from '../utils/localStorage';
+import Auth from '../utils/auth';
+import { DELETE_GAME } from '../utils/mutations';
 
 const ProfilePage = () => {
+  // use mutation to delete a game
+  const [removeGame] = useMutation(DELETE_GAME);
+
+  // handle remove game function to delete a game from the user's profile
+  const handleRemoveGame = async (game_id) => {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const response = await removeGame({
+        variables: { game_id: game_id },
+      });
+
+      // if game is successfully deleted, remove game from local storage
+      if (response.data.removeGame.savedGames) {
+        removeGameId(game_id);
+      }
+    } catch (err) {
+      // if there's an error, log the error
+      console.error(err);
+    }
+  };
+
   // if data isn't here yet, say so
   const { loading, data } = useQuery(QUERY_ME);
 
   if (loading) {
-    return <h2>LOADING...</h2>;
+    return <h2 className="text-center text-2xl font-extrabold">LOADING...</h2>;
   }
-
-  console.log(data.me);
 
   return (
     <div className="profileMain mt-11">
@@ -62,7 +89,12 @@ const ProfilePage = () => {
                 <Link to={game.link} target="_blank" rel="noopener noreferrer">
                   <button className="btn btn-primary">View Game</button>
                 </Link>
-                <button className="btn btn-error">DELETE</button>
+                <button
+                  className="btn btn-error"
+                  onClick={() => handleRemoveGame(game.game_id)}
+                >
+                  Delete Game
+                </button>
               </div>
             </div>
           ))}
