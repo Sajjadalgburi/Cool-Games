@@ -39,3 +39,14 @@ export const SAVE_GAME = gql`
     }
   }
 `;
+
+export const DELETE_GAME = gql`
+  mutation removeGame($game_id: ID!) {
+    removeGame(game_id: $game_id) {
+      _id
+      savedGames {
+        game_id
+      }
+    }
+  }
+`;
