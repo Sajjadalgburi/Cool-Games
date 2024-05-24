@@ -54,3 +54,25 @@ body {
   align-items: center;
   height: 40vh;
 }
+
+.SearchBar {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 30px 8px 10px;
+  box-sizing: border-box;
+}
