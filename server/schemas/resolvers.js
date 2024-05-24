@@ -1,3 +1,6 @@
+require('dotenv').config();
+console.log(process.env.API_KEY); // This should log your API key
+
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 const axios = require('axios');
@@ -6,10 +9,8 @@ const {
   UserInputError, // Ensure correct casing for UserInputError
 } = require('apollo-server-express');
 
-require('dotenv').config();
-const rapidApiKey = process.env.RAPID_API_KEY;
-
-console.log(rapidApiKey);
+// you can get a free API key by signing up at https://rapidapi.com/opencritic/api/opencritic
+const rapidApiKey = process.env.API_KEY;
 
 const resolvers = {
   Query: {
@@ -39,8 +40,7 @@ const resolvers = {
         },
         headers: {
           // Use the RapidAPI key to make requests to the OpenCritic API
-          'X-RapidAPI-Key':
-            'c8748cb42fmsh6e9d32aadc7ef53p15d452jsne8f7dbeea92f', // Use the RapidAPI key from environment variable
+          'X-RapidAPI-Key': rapidApiKey, // Use the RapidAPI key from environment variable
           'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com',
         },
       };
@@ -53,6 +53,8 @@ const resolvers = {
             `Failed to fetch popular games: ${response.statusText}`,
           );
         }
+
+        localStorage.setItem(rapidApiKey, JSON.stringify(response.data));
 
         return response.data.map((game) => ({
           game_id: game.id,
@@ -78,11 +80,10 @@ const resolvers = {
         method: 'GET',
         url: 'https://opencritic-api.p.rapidapi.com/game/search',
         params: {
-          criteria: { game },
+          criteria: game,
         },
         headers: {
-          'X-RapidAPI-Key':
-            'c8748cb42fmsh6e9d32aadc7ef53p15d452jsne8f7dbeea92f',
+          'X-RapidAPI-Key': rapidApiKey,
           'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com',
         },
       };
@@ -96,17 +97,11 @@ const resolvers = {
           );
         }
 
+        console.log(response.data);
+
         return response.data.map((game) => ({
           game_id: game.id,
           title: game.name,
-          rating: game.topCriticScore,
-          link: game.url,
-          releaseDate: game.firstReleaseDate,
-          // https://img.opencritic.com/ ! IMPORTANT ! this is the base URL for the images
-          // game/5434/XYHLvQr3.jpg ! IMPORTANT ! this is the image path given by each game object
-          image: game.images.banner.og
-            ? `https://img.opencritic.com/${game.images.banner.og}`
-            : `https://via.placeholder.com/150`,
         }));
       } catch (error) {
         console.error('Error fetching popular games:', error);
