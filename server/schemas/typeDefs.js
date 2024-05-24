@@ -24,6 +24,7 @@ const typeDefs = gql`
     me: User
     ## Defining a new query to fetch popular games from the backend then display them on the front end
     popularGames: [Game]! # New query to fetch popular games
+    searchGames(game: String!): [Game] # New query to search for games
   }
 
   type Auth {
