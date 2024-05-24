@@ -71,6 +71,48 @@ const resolvers = {
         throw new Error('Failed to fetch popular games');
       }
     },
+
+    // Resolver function for searching games
+    searchGames: async (parent, { game }) => {
+      const options = {
+        method: 'GET',
+        url: 'https://opencritic-api.p.rapidapi.com/game/search',
+        params: {
+          criteria: { game },
+        },
+        headers: {
+          'X-RapidAPI-Key':
+            'c8748cb42fmsh6e9d32aadc7ef53p15d452jsne8f7dbeea92f',
+          'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com',
+        },
+      };
+
+      try {
+        const response = await axios.request(options);
+
+        if (response.status !== 200) {
+          throw new Error(
+            `Failed to fetch popular games: ${response.statusText}`,
+          );
+        }
+
+        return response.data.map((game) => ({
+          game_id: game.id,
+          title: game.name,
+          rating: game.topCriticScore,
+          link: game.url,
+          releaseDate: game.firstReleaseDate,
+          // https://img.opencritic.com/ ! IMPORTANT ! this is the base URL for the images
+          // game/5434/XYHLvQr3.jpg ! IMPORTANT ! this is the image path given by each game object
+          image: game.images.banner.og
+            ? `https://img.opencritic.com/${game.images.banner.og}`
+            : `https://via.placeholder.com/150`,
+        }));
+      } catch (error) {
+        console.error('Error fetching popular games:', error);
+        throw new Error('Failed to fetch popular games');
+      }
+    },
   },
 
   Mutation: {
