@@ -46,42 +46,25 @@ const resolvers = {
       };
 
       try {
-        // Check if data exists in localStorage
-        const cachedData = localStorage.getItem(rapidApiKey);
-        if (cachedData) {
-          // If data exists, return cached data without making API request
-          const parsedData = JSON.parse(cachedData);
-          return parsedData.map((game) => ({
-            game_id: game.id,
-            title: game.name,
-            rating: game.topCriticScore,
-            link: game.url,
-            releaseDate: game.firstReleaseDate,
-            image: game.images.banner.og
-              ? `https://img.opencritic.com/${game.images.banner.og}`
-              : `https://via.placeholder.com/150`,
-          }));
-        } else {
-          // If data doesn't exist in localStorage, fetch from API
-          const response = await axios.request(options);
+        // If data doesn't exist in localStorage, fetch from API
+        const response = await axios.request(options);
 
-          if (response.status !== 200) {
-            throw new Error(
-              `Failed to fetch popular games: ${response.statusText}`,
-            );
-          }
-
-          return response.data.map((game) => ({
-            game_id: game.id,
-            title: game.name,
-            rating: game.topCriticScore,
-            link: game.url,
-            releaseDate: game.firstReleaseDate,
-            image: game.images.banner.og
-              ? `https://img.opencritic.com/${game.images.banner.og}`
-              : `https://via.placeholder.com/150`,
-          }));
+        if (response.status !== 200) {
+          throw new Error(
+            `Failed to fetch popular games: ${response.statusText}`,
+          );
         }
+
+        return response.data.map((game) => ({
+          game_id: game.id,
+          title: game.name,
+          rating: game.topCriticScore,
+          link: game.url,
+          releaseDate: game.firstReleaseDate,
+          image: game.images.banner.og
+            ? `https://img.opencritic.com/${game.images.banner.og}`
+            : `https://via.placeholder.com/150`,
+        }));
       } catch (error) {
         console.error('Error fetching popular games:', error);
         throw new Error('Failed to fetch popular games');
