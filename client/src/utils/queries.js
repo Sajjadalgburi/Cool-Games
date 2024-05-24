@@ -50,3 +50,12 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const SINGLE_GAME = gql`
+  query searchGames($game: String!) {
+    searchGames(game: $game) {
+      game_id
+      title
+    }
+  }
+`;
