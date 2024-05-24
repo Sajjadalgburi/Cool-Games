@@ -54,8 +54,6 @@ const resolvers = {
           );
         }
 
-        localStorage.setItem(rapidApiKey, JSON.stringify(response.data));
-
         return response.data.map((game) => ({
           game_id: game.id,
           title: game.name,
