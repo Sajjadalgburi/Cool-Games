@@ -46,26 +46,42 @@ const resolvers = {
       };
 
       try {
-        const response = await axios.request(options);
+        // Check if data exists in localStorage
+        const cachedData = localStorage.getItem(rapidApiKey);
+        if (cachedData) {
+          // If data exists, return cached data without making API request
+          const parsedData = JSON.parse(cachedData);
+          return parsedData.map((game) => ({
+            game_id: game.id,
+            title: game.name,
+            rating: game.topCriticScore,
+            link: game.url,
+            releaseDate: game.firstReleaseDate,
+            image: game.images.banner.og
+              ? `https://img.opencritic.com/${game.images.banner.og}`
+              : `https://via.placeholder.com/150`,
+          }));
+        } else {
+          // If data doesn't exist in localStorage, fetch from API
+          const response = await axios.request(options);
 
-        if (response.status !== 200) {
-          throw new Error(
-            `Failed to fetch popular games: ${response.statusText}`,
-          );
+          if (response.status !== 200) {
+            throw new Error(
+              `Failed to fetch popular games: ${response.statusText}`,
+            );
+          }
+
+          return response.data.map((game) => ({
+            game_id: game.id,
+            title: game.name,
+            rating: game.topCriticScore,
+            link: game.url,
+            releaseDate: game.firstReleaseDate,
+            image: game.images.banner.og
+              ? `https://img.opencritic.com/${game.images.banner.og}`
+              : `https://via.placeholder.com/150`,
+          }));
         }
-
-        return response.data.map((game) => ({
-          game_id: game.id,
-          title: game.name,
-          rating: game.topCriticScore,
-          link: game.url,
-          releaseDate: game.firstReleaseDate,
-          // https://img.opencritic.com/ ! IMPORTANT ! this is the base URL for the images
-          // game/5434/XYHLvQr3.jpg ! IMPORTANT ! this is the image path given by each game object
-          image: game.images.banner.og
-            ? `https://img.opencritic.com/${game.images.banner.og}`
-            : `https://via.placeholder.com/150`,
-        }));
       } catch (error) {
         console.error('Error fetching popular games:', error);
         throw new Error('Failed to fetch popular games');
@@ -91,19 +107,17 @@ const resolvers = {
 
         if (response.status !== 200) {
           throw new Error(
-            `Failed to fetch popular games: ${response.statusText}`,
+            `Failed to fetch games for search term '${game}': ${response.statusText}`,
           );
         }
-
-        console.log(response.data);
 
         return response.data.map((game) => ({
           game_id: game.id,
           title: game.name,
         }));
       } catch (error) {
-        console.error('Error fetching popular games:', error);
-        throw new Error('Failed to fetch popular games');
+        console.error(error);
+        throw new Error('Error searching games');
       }
     },
   },
@@ -128,6 +142,7 @@ const resolvers = {
       } catch (err) {
         // Log any errors that occur during the process
         console.error(err);
+        throw new Error('Error creating user');
       }
     },
 
@@ -152,6 +167,7 @@ const resolvers = {
         return { token, user };
       } catch (err) {
         console.error(err);
+        throw new Error('Error logging in');
       }
     },
 
@@ -200,10 +216,11 @@ const resolvers = {
         }
 
         throw new AuthenticationError(
-          'You need to be logged in to remove a game',
+          'You need to be logged in to remove a game,',
         );
       } catch (err) {
         console.error(err);
+        throw new Error('Error removing game');
       }
     },
   },
