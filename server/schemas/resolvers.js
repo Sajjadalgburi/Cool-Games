@@ -106,23 +106,36 @@ const resolvers = {
       };
 
       try {
-        const response = await axios.request(options);
+        // Check if data exists in localStorage
+        const cachedData = localStorage.getItem(`search_${game}`);
+        if (cachedData) {
+          // If data exists, return cached data without making API request
+          const parsedData = JSON.parse(cachedData);
+          return parsedData.map((game) => ({
+            game_id: game.id,
+            title: game.name,
+          }));
+        } else {
+          // If data doesn't exist in localStorage, fetch from API
+          const response = await axios.request(options);
 
-        if (response.status !== 200) {
-          throw new Error(
-            `Failed to fetch popular games: ${response.statusText}`,
-          );
+          if (response.status !== 200) {
+            throw new Error(
+              `Failed to fetch games for search term '${game}': ${response.statusText}`,
+            );
+          }
+
+          // Store fetched data in localStorage
+          localStorage.setItem(`search_${game}`, JSON.stringify(response.data));
+
+          return response.data.map((game) => ({
+            game_id: game.id,
+            title: game.name,
+          }));
         }
-
-        console.log(response.data);
-
-        return response.data.map((game) => ({
-          game_id: game.id,
-          title: game.name,
-        }));
       } catch (error) {
-        console.error('Error fetching popular games:', error);
-        throw new Error('Failed to fetch popular games');
+        console.error(`Error fetching games for search term '${game}':`, error);
+        throw new Error(`Failed to fetch games for search term '${game}'`);
       }
     },
   },
