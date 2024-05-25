@@ -19,15 +19,15 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: '/profile',
+        path: 'profile',
         element: <ProfilePage />,
       },
       {
-        path: '/search',
+        path: 'search',
         element: <SearchResult />,
       },
       {
-        path: '/game/:id',
+        path: 'game/:game_id',
         element: <ViewSingleGame />,
       },
     ],
