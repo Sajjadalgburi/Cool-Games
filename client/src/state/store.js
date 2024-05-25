@@ -1,7 +1,10 @@
 // the store is the global state of the application which passes the state to the components
 
-import { confifureStore, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
+import searchReducer from './searchSlice';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    search: searchReducer,
+  },
 });
