@@ -1,25 +1,32 @@
-import { useState, useEffect } from 'react';
-import { SINGLE_GAME } from '../../utils/queries';
+import { useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
+import { SINGLE_GAME } from '../../utils/queries';
+import { useNavigate } from 'react-router-dom';
+
 // create a functional component SearchBar
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
 
   const [searchGames, { loading, data, error }] = useLazyQuery(SINGLE_GAME);
 
+  const navigate = useNavigate();
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
     searchGames({ variables: { game: searchValue } });
-  };
 
-  console.log(data);
+    // Redirect to /search
+
+    navigate('/search');
+  };
 
   return (
     <div className="SearchBar">
       <form onSubmit={handleFormSubmit}>
         <input
           type="text"
+          value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           placeholder="Search for games..."
           className="input input-bordered"
