@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { SINGLE_GAME } from '../../utils/queries';
+import { SEARCH_GAMES } from '../../utils/queries';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setSearchData } from '../../state/searchSlice'; // Import the action creator
@@ -9,7 +9,7 @@ import { setSearchData } from '../../state/searchSlice'; // Import the action cr
 const SearchBar = () => {
   const [searchValue, setSearchValue] = useState('');
 
-  const [searchGames, { loading, data, error }] = useLazyQuery(SINGLE_GAME);
+  const [searchGames, { loading, data, error }] = useLazyQuery(SEARCH_GAMES);
 
   const navigate = useNavigate();
 
