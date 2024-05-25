@@ -6,7 +6,7 @@ import HomePage from './Page/HomePage.jsx';
 import ProfilePage from './Page/Profile.jsx';
 import ErrorPage from './Page/ErrorPage.jsx';
 import ViewSingleGame from './Page/ViewGame.jsx';
-import SearchedGamesResult from './Components/SearchedGamesResult/index.jsx';
+import SearchResult from './Components/SearchResult/SearchResult.jsx';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/search',
-        element: <SearchedGamesResult />,
+        element: <SearchResult />,
       },
       {
         path: '/game/:id',
