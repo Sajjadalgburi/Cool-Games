@@ -126,7 +126,9 @@ const resolvers = {
           );
         }
 
-        return response.data.map((game) => ({
+        const game = response.data; // Assuming response.data is the game object
+
+        return {
           game_id: game.id,
           title: game.name,
           rating: game.topCriticScore,
@@ -136,10 +138,9 @@ const resolvers = {
             ? `https://img.opencritic.com/${game.images.banner.og}`
             : `https://via.placeholder.com/150`,
           description: game.description,
-          ageRating: game.Rating.imageSrc,
-          trailers: game.trailers.externalUrl,
-          genres: game.Genres.name,
-        }));
+          trailers: game.trailers.map((trailer) => trailer.externalUrl), // Assuming trailers is an array
+          genres: game.Genres.map((genre) => genre.name), // Assuming Genres is an array
+        };
       } catch (error) {
         console.error('Error fetching popular games:', error);
         throw new Error('Failed to fetch popular games');
