@@ -15,6 +15,14 @@ const SearchBar = () => {
 
   const dispatch = useDispatch();
 
+  const grabSearchedValue = () => {
+    localStorage.removeItem('gameTitle');
+
+    if (searchValue) {
+      localStorage.setItem('gameTitle', searchValue);
+    }
+  };
+
   useEffect(() => {
     if (data) {
       dispatch(setSearchData(data)); // Dispatch the action to update the store
@@ -22,6 +30,9 @@ const SearchBar = () => {
       // this is called 'programmatic navigation' where we navigate the user to a different route after the search is complete
       // this is done by using the navigate hook from react-router-dom
       navigate('/search');
+
+      // grab the searched value and store it in local storage
+      grabSearchedValue();
     }
   }, [data, dispatch, navigate]);
 
