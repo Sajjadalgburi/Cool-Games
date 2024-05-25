@@ -6,17 +6,29 @@ import { useEffect } from 'react';
 const SingleGame = () => {
   const { game_id } = useParams();
 
-  const [singleGame, { loading, data, error }] = useLazyQuery(SINGLE_GAME);
+  const [fetchSingleGame, { loading, data, error }] = useLazyQuery(SINGLE_GAME);
 
   useEffect(() => {
-    singleGame({ variables: { game_id: game_id } });
-  }, [data]);
+    fetchSingleGame({ variables: { game_id: game_id } });
+  }, [game_id]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <div className="singleGame">
-      <h1>Game Details</h1>
-      <p>Game ID: {game_id}</p>
-      {/* Add more details and fetch data based on game_id */}
+    <div className="singleGame mt-12">
+      <div className="gameImageDiv ">
+        <img
+          className="rounded-md gameImage"
+          src={data?.singleGame?.image}
+          alt={data?.singleGame?.title || 'Game Image'}
+        />
+      </div>
+      <div className="gameDetails">
+        <h1 className="text-3xl font-bold text-center mt-6">
+          {data?.singleGame?.title}
+        </h1>
+      </div>
     </div>
   );
 };
