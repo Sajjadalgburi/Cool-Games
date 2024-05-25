@@ -76,3 +76,14 @@ body {
   padding: 8px 30px 8px 10px;
   box-sizing: border-box;
 }
+
+.gameImageDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* or specify a height if needed */
+}
+
+.gameImage {
+  box-shadow: -10px 10px 0 white;
+}
