@@ -15,6 +15,7 @@
   "description": "",
   "dependencies": {
     "@apollo/client": "^3.10.3",
+    "@reduxjs/toolkit": "^2.2.5",
     "@stripe/stripe-js": "^1.54.2",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
