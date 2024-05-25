@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './Page/HomePage.jsx';
 import ProfilePage from './Page/Profile.jsx';
 import ErrorPage from './Page/ErrorPage.jsx';
-import ViewSingleGame from './Page/ViewGame.jsx';
+import SingleGame from './Page/ViewSingleGame.jsx';
 import SearchResult from './Components/SearchResult/SearchResult.jsx';
 
 const router = createBrowserRouter([
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'game/:game_id',
-        element: <ViewSingleGame />,
+        element: <SingleGame />,
       },
     ],
   },
