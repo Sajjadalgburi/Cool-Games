@@ -29,7 +29,20 @@ const savedGamesSchema = new Schema({
   image: {
     type: String,
   },
-  // Game rating field (number), required
+  description: {
+    type: String,
+  },
+  ageRating: {
+    type: String,
+  },
+  trailers: {
+    type: [String], // Array of strings
+    default: [],
+  },
+  genres: {
+    type: [String], // Array of strings
+    default: [],
+  },
 });
 
 // Export the savedGamesSchema
