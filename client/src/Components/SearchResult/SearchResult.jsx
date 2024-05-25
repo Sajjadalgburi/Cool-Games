@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 
 const SearchResult = () => {
   const { searchGames } = useSelector((state) => state.search.searchData);
+  const gameTitle = localStorage.getItem('gameTitle');
 
   return (
     <div>
       <h1 className="flex text-3xl font-bold justify-center mb-6 md:justify-start mt-8 md:ml-24">
-        Results for:{' '}
+        Results for {gameTitle}:{' '}
       </h1>
       {searchGames ? (
         <>
