@@ -1,9 +1,15 @@
-// this page is for viewing an individual game through its unique game_id
+import { useParams } from 'react-router-dom';
 
-export default async function ViewSingleGame() {
+const ViewSingleGame = () => {
+  const { game_id } = useParams();
+
   return (
     <div>
-      <h1>View Game</h1>
+      <h1>Game Details</h1>
+      <p>Game ID: {game_id}</p>
+      {/* Add more details and fetch data based on game_id */}
     </div>
   );
-}
+};
+
+export default ViewSingleGame;
