@@ -47,7 +47,7 @@ const typeDefs = gql`
     description: String
     ageRating: String
     trailers: [String]
-    Genres: [String]
+    genres: [String]
   }
 
   ## Specifying the type of data that can be queried from the server
