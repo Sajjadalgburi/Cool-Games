@@ -34,6 +34,11 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+// redux provider
+
+import { Provider } from 'react-redux';
+import { store } from './state/store';
+
 // react router
 import { Outlet } from 'react-router-dom';
 
@@ -46,11 +51,11 @@ function App() {
   return (
     <AuthProvider>
       <ApolloProvider client={client}>
-        <>
+        <Provider store={store}>
           <Navigation />
           <Outlet />
           <Footer />
-        </>
+        </Provider>
       </ApolloProvider>
     </AuthProvider>
   );
