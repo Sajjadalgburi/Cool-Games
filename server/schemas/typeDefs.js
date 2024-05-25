@@ -13,11 +13,15 @@ const typeDefs = gql`
   ## Defining a new type called Game to represent the data that will be fetched from the backend
   type Game {
     game_id: ID!
-    title: String
-    rating: String
+    title: String!
+    rating: String!
+    link: String!
     releaseDate: String
-    link: String
     image: String
+    description: String
+    ageRating: String
+    trailers: [String]
+    genres: [String]
   }
 
   type Query {
@@ -25,6 +29,7 @@ const typeDefs = gql`
     ## Defining a new query to fetch popular games from the backend then display them on the front end
     popularGames: [Game]! # New query to fetch popular games
     searchGames(game: String!): [Game] # New query to search for games
+    singleGame(game_id: ID!): Game # New query to fetch a single game
   }
 
   type Auth {
@@ -36,9 +41,13 @@ const typeDefs = gql`
     game_id: ID!
     title: String!
     rating: String!
-    releaseDate: String
     link: String!
+    releaseDate: String
     image: String
+    description: String
+    ageRating: String
+    trailers: [String]
+    Genres: [String]
   }
 
   ## Specifying the type of data that can be queried from the server
