@@ -18,6 +18,9 @@ const SearchBar = () => {
   useEffect(() => {
     if (data) {
       dispatch(setSearchData(data)); // Dispatch the action to update the store
+
+      // this is called 'programmatic navigation' where we navigate the user to a different route after the search is complete
+      // this is done by using the navigate hook from react-router-dom
       navigate('/search');
     }
   }, [data, dispatch, navigate]);
