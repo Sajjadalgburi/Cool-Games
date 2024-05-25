@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { SINGLE_GAME } from '../../utils/queries';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setSearchData } from '../../state/searchSlice'; // Import the action creator
 
 // create a functional component SearchBar
 const SearchBar = () => {
@@ -11,14 +13,18 @@ const SearchBar = () => {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setSearchData(data)); // Dispatch the action to update the store
+      navigate('/search');
+    }
+  }, [data, dispatch, navigate]);
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
     searchGames({ variables: { game: searchValue } });
-
-    // Redirect to /search
-
-    navigate('/search');
   };
 
   return (
