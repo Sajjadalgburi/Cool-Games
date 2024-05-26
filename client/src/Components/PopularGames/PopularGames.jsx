@@ -93,8 +93,10 @@ const PopularGamesList = () => {
 
   return (
     <>
-      <h2 className="text-4xl font-bold my-9 text-center">Popular Games</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <h2 className="text-4xl font-bold mb-3 md:my-9 text-center">
+        Popular Games
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-x-10 gap-y-4">
         {games.map((game) => (
           <div key={game.game_id} className="border rounded shadow p-4">
             <img
@@ -102,16 +104,19 @@ const PopularGamesList = () => {
               alt={`Cover for ${game.title}`}
               className="h-40 w-full object-cover mb-2"
             />
-            <h3 className="text-lg font-semibold mb-1">{game.title}</h3>
-            <p className="text-gray-600 mb-2">Rating: {game.rating}</p>
-            <p className="text-gray-600 mb-2">Genre: {game.genre}</p>
+            <h3 className="text-xl font-semibold my-5 text-center">
+              {game.title}
+            </h3>
+
             {Auth.loggedIn() ? (
-              <div className="flex justify-between align-middle">
+              <div className="flex mt-16 justify-between align-middle">
                 <Link to={`/game/${game.game_id}`}>
-                  <button className="btn btn-primary">View Game</button>
+                  <button className="btn btn-primary w-1/3 text-xs sm:w-4/12">
+                    View Game
+                  </button>
                 </Link>
                 <button
-                  className="btn btn-secondary"
+                  className="btn btn-primary w-1/3 text-xs sm:w-4/12"
                   disabled={savedGameIds?.some(
                     (savedGameId) => savedGameId === game.game_id,
                   )}
@@ -125,14 +130,17 @@ const PopularGamesList = () => {
                 </button>
               </div>
             ) : (
-              <div className="flex justify-between align-middle">
+              <div className="flex mt-16 justify-between align-middle">
                 <button
-                  className="btn btn-primary"
+                  className="btn btn-primary w-1/3 text-xs sm:w-4/12"
                   onClick={() => handleOpenModal('logIn')}
                 >
                   View Game
                 </button>
-                <button className="btn btn-secondary" onClick={alertUser}>
+                <button
+                  className="btn btn-primary w-1/3 text-xs sm:w-4/12"
+                  onClick={alertUser}
+                >
                   Save Game
                 </button>
               </div>
