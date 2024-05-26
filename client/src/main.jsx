@@ -7,6 +7,7 @@ import ProfilePage from './Page/Profile.jsx';
 import ErrorPage from './Page/ErrorPage.jsx';
 import SingleGame from './Page/ViewSingleGame.jsx';
 import SearchResult from './Components/SearchResult/SearchResult.jsx';
+import CategoryPage from './Page/CategoryPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: 'game/:game_id',
         element: <SingleGame />,
+      },
+      {
+        path: 'category/:categoryName',
+        element: <CategoryPage />,
       },
     ],
   },
