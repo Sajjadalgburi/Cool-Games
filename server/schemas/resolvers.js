@@ -147,6 +147,43 @@ const resolvers = {
         throw new Error('Failed to fetch popular games');
       }
     },
+
+    categoryGameFetch: async (parent, { category }) => {
+      const axios = require('axios');
+
+      const options = {
+        method: 'GET',
+        url: 'https://opencritic-api.p.rapidapi.com/meta/search',
+        params: {
+          criteria: category,
+        },
+        headers: {
+          'X-RapidAPI-Key': rapidApiKey,
+          'X-RapidAPI-Host': 'opencritic-api.p.rapidapi.com',
+        },
+      };
+
+      try {
+        // If data doesn't exist in localStorage, fetch from API
+        const response = await axios.request(options);
+
+        if (response.status !== 200) {
+          throw new Error(
+            `Failed to fetch popular games: ${response.statusText}`,
+          );
+        }
+
+        const game = response.data; // Assuming response.data is the game object
+
+        return {
+          game_id: game.id,
+          title: game.name,
+        };
+      } catch (error) {
+        console.error('Error fetching category:', error);
+        throw new Error('Failed to fetch category');
+      }
+    },
   },
 
   Mutation: {
