@@ -140,6 +140,7 @@ const resolvers = {
           description: game.description,
           trailers: game.trailers.map((trailer) => trailer.externalUrl), // Assuming trailers is an array
           genres: game.Genres.map((genre) => genre.name), // Assuming Genres is an array
+          platforms: game.Platforms.map((genre) => genre.shortName), // Assuming Genres is an array
         };
       } catch (error) {
         console.error('Error fetching popular games:', error);
