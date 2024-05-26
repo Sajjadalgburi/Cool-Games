@@ -77,13 +77,11 @@ body {
   box-sizing: border-box;
 }
 
-.gameImageDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%; /* or specify a height if needed */
-}
-
 .gameImage {
   box-shadow: -10px 10px 0 white;
+}
+
+.card-body {
+  padding: 2rem; /* Adjust padding */
+  margin: 0 auto; /* Center card */
 }
