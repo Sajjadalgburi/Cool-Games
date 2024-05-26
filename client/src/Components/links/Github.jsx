@@ -7,10 +7,10 @@ const Github = () => {
       rel="noopener noreferrer"
       to="https://github.com/Sajjadalgburi"
     >
-      <button className="btn mx-4 btn-ghost btn-circle">
+      <button className="btn  md:mx-4 btn-ghost btn-circle">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-8 w-8"
+          className="h-6 w-6  md:h-8 md:w-8"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

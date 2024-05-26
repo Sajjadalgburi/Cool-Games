@@ -22,7 +22,7 @@ const Navigation = () => {
     <>
       <div className="navbar bg-base-100 mt-4">
         <div className="navbar-start">
-          <div className="dropdown ml-3">
+          <div className="dropdown md:ml-3">
             <div
               tabIndex={0}
               role="button"
@@ -30,7 +30,7 @@ const Navigation = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
+                className=" h-6 w-6 md:h-8 md:w-8"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -121,7 +121,7 @@ const Navigation = () => {
 
             {/* sun icon */}
             <svg
-              className="swap-off fill-current w-9 h-9"
+              className="swap-off fill-current w-6 h-6 md:w-9 md:h-9"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -130,7 +130,7 @@ const Navigation = () => {
 
             {/* moon icon */}
             <svg
-              className="swap-on fill-current w-9 h-9"
+              className="swap-on fill-current  w-6 h-6 md:w-9 md:h-9"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
