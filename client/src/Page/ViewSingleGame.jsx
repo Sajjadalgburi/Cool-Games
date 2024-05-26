@@ -4,8 +4,11 @@ import { SINGLE_GAME } from '../utils/queries';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDate } from '../utils/dateFormatter';
+import { useNavigate } from 'react-router-dom';
 
 const SingleGame = () => {
+  const navigate = useNavigate();
+
   const { game_id } = useParams();
 
   const [fetchSingleGame, { loading, data, error }] = useLazyQuery(SINGLE_GAME);
@@ -85,7 +88,6 @@ const SingleGame = () => {
           </div>
         </div>
       </div>
-
       <div className="trailers">
         <h1 className="text-4xl font-bold text-center my-10">Game Trailers</h1>
         <div className="trailerSection flex flex-wrap justify-center gap-4">
@@ -96,7 +98,6 @@ const SingleGame = () => {
           )}
         </div>
       </div>
-
       <div className="gameDescription">
         <h1 className="text-4xl font-bold text-center my-10">
           Game Description
@@ -104,6 +105,12 @@ const SingleGame = () => {
         <p className="text-sm p-3 md:text-xl font-medium text-center">
           {data?.singleGame?.description}
         </p>
+      </div>
+      <div className="goBackButton flex justify-center mt-10">
+        {' '}
+        <button className="btn btn-secondary" onClick={() => navigate(-1)}>
+          Go Back?
+        </button>
       </div>
     </div>
   );
