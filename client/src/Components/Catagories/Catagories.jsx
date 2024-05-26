@@ -25,7 +25,7 @@ const Catagories = () => {
           {categories.map((category) => {
             return (
               <li key={category} className="mb-4">
-                <Link to={`category/${category}}`}>{category}</Link>
+                <Link to={`category/${category}`}>{category}</Link>
               </li>
             );
           })}{' '}
