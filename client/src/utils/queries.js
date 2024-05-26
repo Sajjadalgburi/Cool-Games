@@ -92,3 +92,12 @@ export const SINGLE_GAME = gql`
     }
   }
 `;
+
+export const CATEGORY_GAME_FETCH = gql`
+  query categoryGameFetch($category: String!) {
+    categoryGameFetch(category: $category) {
+      game_id
+      title
+    }
+  }
+`;
