@@ -90,7 +90,7 @@ const SingleGame = () => {
         <h1 className="text-4xl font-bold text-center my-10">Game Trailers</h1>
         <div className="trailerSection flex flex-wrap justify-center gap-4">
           {data?.singleGame?.trailers.length ? (
-            { trailerIframes }
+            trailerIframes
           ) : (
             <p>No trailers available</p>
           )}
