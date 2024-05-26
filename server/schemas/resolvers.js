@@ -173,12 +173,10 @@ const resolvers = {
           );
         }
 
-        const game = response.data; // Assuming response.data is the game object
-
-        return {
+        return response.data.map((game) => ({
           game_id: game.id,
           title: game.name,
-        };
+        }));
       } catch (error) {
         console.error('Error fetching category:', error);
         throw new Error('Failed to fetch category');
