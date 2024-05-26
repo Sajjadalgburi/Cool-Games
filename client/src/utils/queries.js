@@ -10,6 +10,11 @@ export const POPULAR_GAMES_QUERY = gql`
       link
       releaseDate
       image
+      description
+      ageRating
+      trailers
+      genres
+      platforms
     }
   }
 `;
@@ -24,9 +29,14 @@ export const QUERY_SINGLE_USER = gql`
         game_id
         title
         rating
-        releaseDate
         link
+        releaseDate
         image
+        description
+        ageRating
+        trailers
+        genres
+        platforms
       }
     }
   }
@@ -43,9 +53,14 @@ export const QUERY_ME = gql`
         game_id
         title
         rating
-        releaseDate
         link
+        releaseDate
         image
+        description
+        ageRating
+        trailers
+        genres
+        platforms
       }
     }
   }
@@ -73,6 +88,7 @@ export const SINGLE_GAME = gql`
       ageRating
       trailers
       genres
+      platforms
     }
   }
 `;
