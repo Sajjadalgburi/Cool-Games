@@ -31,6 +31,7 @@ const typeDefs = gql`
     popularGames: [Game]! # New query to fetch popular games
     searchGames(game: String!): [Game] # New query to search for games
     singleGame(game_id: ID!): Game # New query to fetch a single game
+    categoryGameFetch(category: String!): [Game] # New query to fetch game categories
   }
 
   type Auth {
