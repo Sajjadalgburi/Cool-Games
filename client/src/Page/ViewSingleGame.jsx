@@ -3,6 +3,7 @@ import { useLazyQuery } from '@apollo/client';
 import { SINGLE_GAME } from '../utils/queries';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../utils/dateFormatter';
 
 const SingleGame = () => {
   const { game_id } = useParams();
@@ -27,6 +28,15 @@ const SingleGame = () => {
     ? getEmbedUrl(data.singleGame.trailers)
     : '';
 
+  // adding spacing between genres and platforms for better readability
+  const genres = data?.singleGame?.genres.join(', ') || 'N/A';
+  const platforms = data?.singleGame?.platforms.join(', ') || 'N/A';
+
+  // Format the release date using the formatDate function
+  const gameReleaseDate = formatDate(data?.singleGame?.releaseDate);
+
+  console.log(gameReleaseDate);
+
   return (
     <div className="singleGame mt-12">
       <div className="gameImageDiv flex justify-center">
@@ -41,10 +51,10 @@ const SingleGame = () => {
           {data?.singleGame?.title}
         </h1>
 
-        <div className="gameDetails flex justify-between">
+        <div className="gameDetails text-xl font-medium flex justify-between">
           <div className="left-side">
-            genres: {data?.singleGame?.genres} <br />
-            {data?.singleGame?.releaseDate} •
+            genres: {genres} <br />
+            {gameReleaseDate} • {platforms}
           </div>
           <div className="right-side">
             <Link to={data?.singleGame?.link} className="">
