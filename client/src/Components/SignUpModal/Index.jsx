@@ -2,7 +2,7 @@
 'use client';
 
 // flow bite react components
-import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
+import { Checkbox, Label, Modal, TextInput } from 'flowbite-react';
 import { CREATE_USER } from '../../utils/mutations';
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
@@ -39,8 +39,8 @@ const SignUpModal = ({ isOpen, formState, onChange, onClose }) => {
         <Modal.Header />
         <Modal.Body>
           <div className="space-y-6">
-            <h3 className="text-2xl text-center font-bold text-gray-900 dark:text-white">
-              Sign In to Cool Games
+            <h3 className="text-2xl font-extrabold uppercase text-center  text-gray-900 dark:text-white">
+              Sign Up to Cool Games
             </h3>
             <div>
               <div className="mb-2 block">
@@ -89,7 +89,9 @@ const SignUpModal = ({ isOpen, formState, onChange, onClose }) => {
               </div>
             </div>
             <div className="w-full flex align-middle justify-center">
-              <Button onClick={handleFormSubmit}>Sign Up!</Button>
+              <button className="btn btn-secondary" onClick={handleFormSubmit}>
+                Sign Up!
+              </button>
             </div>
           </div>
         </Modal.Body>
