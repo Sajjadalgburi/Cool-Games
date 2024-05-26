@@ -24,18 +24,27 @@ const SingleGame = () => {
     return `https://www.youtube.com/embed/${videoId}`;
   };
 
-  const trailerUrl = data?.singleGame?.trailers
-    ? getEmbedUrl(data.singleGame.trailers)
-    : '';
+  // Map through trailers to create iframe elements
+  const trailerIframes =
+    data?.singleGame?.trailers?.map((trailer, index) => (
+      <iframe
+        key={index}
+        width="560"
+        height="315"
+        src={getEmbedUrl(trailer)}
+        title={`Game Trailer ${index + 1}`}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    )) || 'No trailers available';
 
-  // adding spacing between genres and platforms for better readability
+  // Adding spacing between genres and platforms for better readability
   const genres = data?.singleGame?.genres.join(', ') || 'N/A';
   const platforms = data?.singleGame?.platforms.join(', ') || 'N/A';
 
   // Format the release date using the formatDate function
   const gameReleaseDate = formatDate(data?.singleGame?.releaseDate);
-
-  console.log(gameReleaseDate);
 
   return (
     <div className="singleGame mt-12">
@@ -52,15 +61,29 @@ const SingleGame = () => {
         </h1>
 
         <div className="gameDetails text-xl font-medium flex justify-between">
-          <div className="left-side">
-            genres: {genres} <br />
-            {gameReleaseDate} • {platforms}
+          <div className="left-side text-center">
+            <div className="genres">
+              <p className=" font-semibold text-2xl  mb-1">Genres</p> {genres}
+            </div>{' '}
+            <br />
+            {gameReleaseDate} || {platforms}
           </div>
-          <div className="right-side">
-            <Link to={data?.singleGame?.link} className="">
-              link to URL
-            </Link>
+
+          <div className="right-side text-center">
+            <div className="url">
+              <p className=" font-semibold text-2xl  mb-1">URL</p>
+              <Link to={data?.singleGame?.link} className="text-center">
+                Take Me There
+              </Link>
+            </div>
           </div>
+        </div>
+      </div>
+
+      <div className="trailers">
+        <h1 className="text-4xl font-bold text-center my-10">Game Trailers</h1>
+        <div className="trailerSection flex flex-wrap justify-center gap-4">
+          {trailerIframes}
         </div>
       </div>
     </div>
