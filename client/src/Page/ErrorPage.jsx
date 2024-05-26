@@ -1,4 +1,3 @@
-import { Button } from 'flowbite-react';
 import { useNavigate } from 'react-router-dom';
 
 const ErrorPage = () => {
@@ -11,7 +10,9 @@ const ErrorPage = () => {
         Sorry, an unexpected error has occurred. Click the button to go back!
       </p>
       {/* // Add a button to go back using the navigate hook */}
-      <Button onClick={() => navigate(-1)}>Go Back</Button>
+      <button className="btn btn-secondary mt-8" onClick={() => navigate(-1)}>
+        Go Back
+      </button>
     </div>
   );
 };
