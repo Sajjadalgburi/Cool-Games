@@ -126,14 +126,14 @@ const PopularGamesList = () => {
               </div>
             ) : (
               <div className="flex justify-between align-middle">
-                <button className="btn btn-secondary" onClick={alertUser}>
-                  Save Game
-                </button>
                 <button
                   className="btn btn-primary"
                   onClick={() => handleOpenModal('logIn')}
                 >
                   View Game
+                </button>
+                <button className="btn btn-secondary" onClick={alertUser}>
+                  Save Game
                 </button>
               </div>
             )}
