@@ -22,6 +22,7 @@ const typeDefs = gql`
     ageRating: String
     trailers: [String]
     genres: [String]
+    platforms: [String]
   }
 
   type Query {
@@ -48,6 +49,7 @@ const typeDefs = gql`
     ageRating: String
     trailers: [String]
     genres: [String]
+    platforms: [String]
   }
 
   ## Specifying the type of data that can be queried from the server
