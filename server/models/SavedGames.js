@@ -43,6 +43,10 @@ const savedGamesSchema = new Schema({
     type: [String], // Array of strings
     default: [],
   },
+  platforms: {
+    type: [String], // Array of strings
+    default: [],
+  },
 });
 
 // Export the savedGamesSchema
