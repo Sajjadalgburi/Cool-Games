@@ -46,6 +46,9 @@ const SingleGame = () => {
   // Format the release date using the formatDate function
   const gameReleaseDate = formatDate(data?.singleGame?.releaseDate);
 
+  // rounded rating
+  const rating = Math.round(data?.singleGame?.rating);
+
   return (
     <div className="singleGame mt-12">
       <div className="gameImageDiv flex justify-center">
@@ -75,7 +78,10 @@ const SingleGame = () => {
               <Link to={data?.singleGame?.link} className="text-center">
                 Take Me There
               </Link>
-            </div>
+            </div>{' '}
+            <br />
+            <p className=" font-semibold text-2xl  mb-1"> Rating</p>
+            {rating}
           </div>
         </div>
       </div>
@@ -91,7 +97,7 @@ const SingleGame = () => {
         <h1 className="text-4xl font-bold text-center my-10">
           Game Description
         </h1>
-        <p className="text-sm p-3 md:text:xl font-medium text-center">
+        <p className="text-sm p-3 md:text-xl font-medium text-center">
           {data?.singleGame?.description}
         </p>
       </div>
