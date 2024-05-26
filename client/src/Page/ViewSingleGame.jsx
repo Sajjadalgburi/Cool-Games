@@ -86,6 +86,15 @@ const SingleGame = () => {
           {trailerIframes}
         </div>
       </div>
+
+      <div className="gameDescription">
+        <h1 className="text-4xl font-bold text-center my-10">
+          Game Description
+        </h1>
+        <p className="text-sm p-3 md:text:xl font-medium text-center">
+          {data?.singleGame?.description}
+        </p>
+      </div>
     </div>
   );
 };
