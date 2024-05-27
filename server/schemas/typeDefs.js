@@ -36,7 +36,7 @@ const typeDefs = gql`
     date: String
   }
 
-  type DonationInput {
+  input DonationInput {
     amount: Float
   }
 
@@ -65,7 +65,7 @@ const typeDefs = gql`
     searchGames(game: String!): [Game] # New query to search for games
     singleGame(game_id: ID!): Game # New query to fetch a single game
     categoryGameFetch(category: String!): [Game] # New query to fetch game categories
-    checkout: (donation: DonationInput!): Checkout
+    checkout(donation: DonationInput!): Checkout
   }
 
   ## Specifying the type of data that can be queried from the server
