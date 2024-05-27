@@ -85,3 +85,11 @@ body {
   padding: 2rem; /* Adjust padding */
   margin: 0 auto; /* Center card */
 }
+
+.donatePage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
