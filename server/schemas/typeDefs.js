@@ -39,6 +39,12 @@ const typeDefs = gql`
     user: User
   }
 
+  type Donation {
+    _id: ID
+    amount: Float
+    date: String
+  }
+
   input GameInput {
     game_id: ID!
     title: String!
