@@ -101,3 +101,11 @@ export const CATEGORY_GAME_FETCH = gql`
     }
   }
 `;
+
+export const CHECKOUT_QUERY = gql`
+  query checkout($donation: DonationInput!) {
+    checkout(donation: $donation) {
+      session
+    }
+  }
+`;
