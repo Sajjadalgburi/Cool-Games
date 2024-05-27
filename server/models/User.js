@@ -6,6 +6,10 @@ const bcrypt = require('bcrypt');
 // Import SavedGames model
 const savedGamesSchema = require('./SavedGames');
 
+// import donation schema
+
+const donationSchema = require('./Donations');
+
 // Define userSchema using mongoose Schema
 const userSchema = new Schema(
   {
@@ -31,7 +35,15 @@ const userSchema = new Schema(
       minlength: 5,
     },
     // Define savedGames field as an array of SavedGames (subdocument referencing)
-    savedGames: [savedGamesSchema],
+    savedGames: {
+      type: [savedGamesSchema],
+      default: [],
+    },
+
+    donation: {
+      type: [donationSchema],
+      default: [],
+    },
   },
   {
     toJSON: {
