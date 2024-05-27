@@ -9,6 +9,7 @@ import SingleGame from './Page/ViewSingleGame.jsx';
 import SearchResult from './Components/SearchResult/SearchResult.jsx';
 import CategoryPage from './Page/CategoryPage.jsx';
 import Donate from './Page/Donate.jsx';
+import Payment from './Page/Stripe-Payment/Payment.jsx';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: 'donate',
         element: <Donate />,
+      },
+      {
+        path: 'payment',
+        element: <Payment />,
       },
     ],
   },
