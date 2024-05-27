@@ -1,5 +1,4 @@
 require('dotenv').config();
-console.log(process.env.API_KEY); // This should log your API key
 
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
@@ -11,6 +10,10 @@ const {
 
 // you can get a free API key by signing up at https://rapidapi.com/opencritic/api/opencritic
 const rapidApiKey = process.env.API_KEY;
+
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+
+const stripe = require('stripe')(stripeSecretKey);
 
 const resolvers = {
   Query: {
@@ -181,6 +184,32 @@ const resolvers = {
         console.error('Error fetching category:', error);
         throw new Error('Failed to fetch category');
       }
+    },
+
+    checkout: async (parent, { donation }, context) => {
+      const url = new URL(context.headers.referer).origin;
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [
+          {
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name: 'Donation',
+                description: 'Thank you for your donation',
+              },
+              unit_amount: donation.amount * 100, // Stripe expects amount in cents
+            },
+            quantity: 1,
+          },
+        ],
+        mode: 'payment',
+        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${url}/`,
+      });
+
+      return { session: session.id };
     },
   },
 
