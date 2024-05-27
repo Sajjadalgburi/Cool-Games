@@ -25,15 +25,6 @@ const typeDefs = gql`
     platforms: [String]
   }
 
-  type Query {
-    me: User
-    ## Defining a new query to fetch popular games from the backend then display them on the front end
-    popularGames: [Game]! # New query to fetch popular games
-    searchGames(game: String!): [Game] # New query to search for games
-    singleGame(game_id: ID!): Game # New query to fetch a single game
-    categoryGameFetch(category: String!): [Game] # New query to fetch game categories
-  }
-
   type Auth {
     token: ID!
     user: User
@@ -65,6 +56,16 @@ const typeDefs = gql`
     trailers: [String]
     genres: [String]
     platforms: [String]
+  }
+
+  type Query {
+    me: User
+    ## Defining a new query to fetch popular games from the backend then display them on the front end
+    popularGames: [Game]! # New query to fetch popular games
+    searchGames(game: String!): [Game] # New query to search for games
+    singleGame(game_id: ID!): Game # New query to fetch a single game
+    categoryGameFetch(category: String!): [Game] # New query to fetch game categories
+    checkout: (donation: DonationInput!): Checkout
   }
 
   ## Specifying the type of data that can be queried from the server
