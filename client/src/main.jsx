@@ -8,6 +8,7 @@ import ErrorPage from './Page/ErrorPage.jsx';
 import SingleGame from './Page/ViewSingleGame.jsx';
 import SearchResult from './Components/SearchResult/SearchResult.jsx';
 import CategoryPage from './Page/CategoryPage.jsx';
+import Donate from './Page/Donate.jsx';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: 'category/:categoryName',
         element: <CategoryPage />,
+      },
+      {
+        path: 'donate',
+        element: <Donate />,
       },
     ],
   },
