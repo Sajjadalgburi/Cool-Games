@@ -4,7 +4,7 @@ import SignUpModal from '../SignUpModal/Index';
 import LoginInModal from '../LoginModal/Index';
 
 // links component so i dont have to repeat the same code (DRY)
-import Github from '../Links/Github';
+import Github from '../links/Github';
 import LinkedIn from '../links/LinkedIn';
 //  using custom made context hook for the modals
 import { useAuth } from '../../../context/AuthContext';
