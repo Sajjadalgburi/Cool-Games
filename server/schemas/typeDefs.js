@@ -49,6 +49,10 @@ const typeDefs = gql`
     amount: Float
   }
 
+  type Checkout {
+    session: ID
+  }
+
   input GameInput {
     game_id: ID!
     title: String!
