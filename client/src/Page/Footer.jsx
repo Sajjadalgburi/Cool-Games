@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Github from '../Components/Links/Github';
+import Github from '../Components/links/Github';
 import LinkedIn from '../Components/links/LinkedIn';
 import Instagram from '../Components/links/Instagram';
 
