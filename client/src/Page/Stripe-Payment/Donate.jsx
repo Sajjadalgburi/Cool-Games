@@ -1,14 +1,66 @@
-import { Link } from 'react-router-dom';
+import { CHECKOUT_QUERY } from '../../utils/queries';
+import { useLazyQuery } from '@apollo/client';
+import { useState, useEffect } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import Auth from '../../utils/auth';
+
+const stripePromise = loadStripe(
+  'pk_test_51PLATxEnm35MOLPGixDbrRgKTTDhXPORxPBLTUvkq9fGDw2PVDCF4j7PrxtuS36MYWSIuiIqXpGX7NLtKL0T4YiL00GFrJPFi0',
+);
 
 const Donate = () => {
+  const [donationAmount, setDonationAmount] = useState(0);
+
+  const handleInputChange = (e) => {
+    setDonationAmount(e.target.value);
+  };
+
+  const [checkout, { data }] = useLazyQuery(CHECKOUT_QUERY);
+
+  console.log('====================================');
+  console.log(data);
+  console.log('====================================');
+
+  useEffect(() => {
+    if (data) {
+      stripePromise.then((res) => {
+        res.redirectToCheckout({ sessionId: data.checkout.session });
+      });
+    }
+  }, [data]);
+
+  const handleSubmit = () => {
+    if (Auth.loggedIn) {
+      checkout({
+        variables: {
+          donation: {
+            amount: parseInt(donationAmount),
+          },
+        },
+      });
+    } else {
+      alert('You must be logged in to make a donation!');
+    }
+  };
+
   return (
     <div className="donatePage">
       <div className="stats bg-primary text-primary-content">
         <div className="stat text-center">
-          <div className="stat-title">Account balance</div>
-          <div className="stat-value my-6">$89,400</div>
+          <label htmlFor="donationAmount">$ </label>
+
+          <input
+            id="donationAmount"
+            type="float"
+            placeholder="Enter amount"
+            value={donationAmount}
+            onChange={handleInputChange}
+            className="input input-bordered input-primary w-full max-w-xs"
+          />
           <div className="stat-actions flex justify-center">
-            <button className="btn btn-sm btn-success">Donate</button>
+            <button onClick={handleSubmit} className="btn btn-sm btn-success">
+              Confirm Donation!
+            </button>
           </div>
         </div>
 
