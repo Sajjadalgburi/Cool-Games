@@ -106,9 +106,13 @@ const Navigation = () => {
           </div>
         </div>
         <div className="navbar-center">
-          <Link to="/" className="btn btn-ghost text-2xl uppercase">
-            cool games
-          </Link>{' '}
+          <Link to="/">
+            <img
+              src="/image/logo.png"
+              alt="Cool Games Logo"
+              className="h-9 sm:h-24 w-auto"
+            />
+          </Link>
         </div>
         <div className="navbar-end">
           <label className="swap swap-rotate mx-2">
