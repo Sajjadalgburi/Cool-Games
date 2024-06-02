@@ -2,8 +2,9 @@ import { CHECKOUT_QUERY } from '../../utils/queries';
 import { useLazyQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import Auth from '../../utils/auth';
 import { useForm } from 'react-hook-form';
+
+import AuthService from '../../utils/auth'; // Updated import for AuthService
 
 const stripePromise = loadStripe(
   'pk_test_51PLATxEnm35MOLPGixDbrRgKTTDhXPORxPBLTUvkq9fGDw2PVDCF4j7PrxtuS36MYWSIuiIqXpGX7NLtKL0T4YiL00GFrJPFi0',
@@ -11,6 +12,7 @@ const stripePromise = loadStripe(
 
 const Donate = () => {
   const [donationAmount, setDonationAmount] = useState(5);
+  const [isLoggedIn, setIsLoggedIn] = useState(AuthService.loggedIn());
 
   const { register } = useForm();
 
@@ -19,10 +21,6 @@ const Donate = () => {
   };
 
   const [checkout, { data }] = useLazyQuery(CHECKOUT_QUERY);
-
-  console.log('====================================');
-  console.log(donationAmount);
-  console.log('====================================');
 
   useEffect(() => {
     if (data) {
@@ -33,7 +31,7 @@ const Donate = () => {
   }, [data]);
 
   const handleSubmit = () => {
-    if (Auth.loggedIn) {
+    if (AuthService.loggedIn()) {
       checkout({
         variables: {
           donation: {
@@ -46,12 +44,15 @@ const Donate = () => {
     }
   };
 
+  useEffect(() => {
+    setIsLoggedIn(AuthService.loggedIn());
+  }, []);
+
   return (
     <div className="donatePage">
       <div className="stats bg-primary text-primary-content">
         <div className="stat text-center">
           <label htmlFor="donationAmount">Enter Donation Amount</label>
-
           <input
             {...register('donation', { min: 1 })}
             id="donationAmount"
