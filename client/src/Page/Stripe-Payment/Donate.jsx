@@ -3,13 +3,16 @@ import { useLazyQuery } from '@apollo/client';
 import { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import Auth from '../../utils/auth';
+import { useForm } from 'react-hook-form';
 
 const stripePromise = loadStripe(
   'pk_test_51PLATxEnm35MOLPGixDbrRgKTTDhXPORxPBLTUvkq9fGDw2PVDCF4j7PrxtuS36MYWSIuiIqXpGX7NLtKL0T4YiL00GFrJPFi0',
 );
 
 const Donate = () => {
-  const [donationAmount, setDonationAmount] = useState(0);
+  const [donationAmount, setDonationAmount] = useState(5);
+
+  const { register } = useForm();
 
   const handleInputChange = (e) => {
     setDonationAmount(e.target.value);
@@ -18,7 +21,7 @@ const Donate = () => {
   const [checkout, { data }] = useLazyQuery(CHECKOUT_QUERY);
 
   console.log('====================================');
-  console.log(data);
+  console.log(donationAmount);
   console.log('====================================');
 
   useEffect(() => {
@@ -47,11 +50,12 @@ const Donate = () => {
     <div className="donatePage">
       <div className="stats bg-primary text-primary-content">
         <div className="stat text-center">
-          <label htmlFor="donationAmount">$ </label>
+          <label htmlFor="donationAmount">Enter Donation Amount</label>
 
           <input
+            {...register('donation', { min: 1 })}
             id="donationAmount"
-            type="float"
+            type="number"
             placeholder="Enter amount"
             value={donationAmount}
             onChange={handleInputChange}
