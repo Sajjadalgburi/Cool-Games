@@ -9,7 +9,7 @@ const {
 } = require('apollo-server-express');
 
 // you can get a free API key by signing up at https://rapidapi.com/opencritic/api/opencritic
-const rapidApiKey = process.env.API_KEY;
+const rapidApiKey = process.env.RAPID_API_KEY;
 
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
