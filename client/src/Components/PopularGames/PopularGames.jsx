@@ -110,10 +110,11 @@ const PopularGamesList = () => {
 
             {Auth.loggedIn() ? (
               <div className="flex mt-16 justify-between align-middle">
-                <Link to={`/game/${game.game_id}`}>
-                  <button className="btn btn-primary w-1/3 text-xs sm:w-4/12">
-                    View Game
-                  </button>
+                <Link
+                  className="btn btn-primary w-1/3 text-xs sm:w-4/12"
+                  to={`/game/${game.game_id}`}
+                >
+                  <button>View Game</button>
                 </Link>
                 <button
                   className="btn btn-primary w-1/3 text-xs sm:w-4/12"
