@@ -11,9 +11,7 @@ const {
 // you can get a free API key by signing up at https://rapidapi.com/opencritic/api/opencritic
 const rapidApiKey = process.env.RAPID_API_KEY;
 
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
-
-const stripe = require('stripe')(stripeSecretKey);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const resolvers = {
   Query: {
