@@ -120,7 +120,6 @@ Please download the latest version of node.js via the following
    ```sh
     MONGODB_URI = <Your MongoDB URI>
     SESS_SECRET = <Your Session Secret>
-    SESS_LIFETIME = <Session Lifetime>
     API_KEY = <Your RapidAPI Key>
     REACT_APP_STRIPE_PUBLISHABLE_KEY = <Your Stripe Publishable Key>
     STRIPE_SECRET_KEY = <Your Stripe Secret Key>
