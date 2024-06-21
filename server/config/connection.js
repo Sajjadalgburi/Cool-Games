@@ -1,6 +1,8 @@
-const { connect, connection } = require('mongoose');
+const { connect, connection, mongo } = require('mongoose');
 require('dotenv').config();
 
-connect('mongodb://localhost:27017/coolGamesDb' || process.env.MONGODB_URI);
+const mongoDbUri = process.env.MONGODB_URI;
+
+connect('mongodb://localhost:27017/coolGamesDb' || mongoDbUri);
 
 module.exports = connection;
